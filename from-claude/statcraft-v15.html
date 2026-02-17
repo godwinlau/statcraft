@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StatCraft — Thesis Statistics & Math Tutoring</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23E8530E'/><text x='50' y='72' text-anchor='middle' font-size='60' fill='white' font-weight='bold'>Σ</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--o:#E8530E;--oh:#D14A0B;--o10:rgba(232,83,14,.08);--obg:#FEF3ED;--d:#1C1917;--d80:#292524;--d60:#44403C;--d50:#57534E;--d40:#78716C;--d30:#A8A29E;--d20:#D6D3D1;--d10:#E7E5E4;--d05:#F5F5F4;--cr:#FBF7F2;--w:#FFF;--r:16px;--rs:10px}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'DM Sans',sans-serif;background:var(--w);color:var(--d);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.65}
+h1,h2,h3,h4{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacing:-.5px}
+.container{max-width:1120px;margin:0 auto;padding:0 28px}
+.mono{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--o);display:flex;align-items:center;gap:8px}
+.mono::before{content:'';width:16px;height:1.5px;background:var(--o)}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;text-decoration:none;border:none}
+.btn-o{background:var(--o);color:#fff}.btn-o:hover{background:var(--oh);transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,83,14,.25)}
+.btn-d{background:var(--d);color:#fff}.btn-d:hover{background:var(--d80);transform:translateY(-2px)}
+.btn-out{background:transparent;color:var(--d);border:1.5px solid var(--d20)}.btn-out:hover{border-color:var(--d);transform:translateY(-2px)}
+.btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.15)}.btn-ghost:hover{background:rgba(255,255,255,.12)}
+
+/* Reveal animation */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
+.rv.vis{opacity:1;transform:none}
+
+/* Nav */
+nav{position:fixed;top:0;width:100%;z-index:100;padding:14px 0;background:rgba(251,247,242,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid transparent;transition:.3s}
+nav.scrolled{border-color:var(--d10);box-shadow:0 1px 8px rgba(0,0,0,.04)}
+nav .container{display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:22px;font-weight:800;color:var(--d);text-decoration:none;display:flex;align-items:center;gap:8px;letter-spacing:-.5px}
+.logo-mark{width:30px;height:30px;background:var(--o);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-links{display:flex;gap:28px}.nav-links a{font-size:14px;font-weight:500;color:var(--d50);text-decoration:none;transition:.15s}.nav-links a:hover{color:var(--d)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.m-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:199;opacity:0;pointer-events:none;transition:.3s}.m-overlay.open{opacity:1;pointer-events:all}
+.mobile-menu{position:fixed;top:0;right:-300px;width:280px;height:100vh;background:#fff;z-index:200;padding:80px 28px 28px;transition:right .3s;box-shadow:-8px 0 40px rgba(0,0,0,.1)}.mobile-menu.open{right:0}
+.mobile-menu a{display:block;padding:14px 0;font-size:16px;font-weight:600;color:var(--d);text-decoration:none;border-bottom:1px solid var(--d10)}
+.mobile-close{position:absolute;top:20px;right:20px;background:none;border:none;cursor:pointer}
+
+/* ===== HERO ===== */
+.hero{background-color:var(--cr);background-image:radial-gradient(circle,var(--d20) .5px,transparent .5px);background-size:24px 24px;padding:160px 0 100px;border-bottom:1px solid var(--d10)}
+.hero-inner{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--o10);border-radius:100px;font-size:13px;font-weight:600;color:var(--o);margin-bottom:24px}
+.hero-eyebrow span{width:6px;height:6px;border-radius:50%;background:var(--o);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-size:clamp(42px,5vw,64px);line-height:1.08;letter-spacing:-2px;margin-bottom:20px}
+.hero h1 em{font-style:normal;color:var(--o)}
+.hero-p{font-size:17px;color:var(--d50);line-height:1.7;margin-bottom:32px;max-width:480px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px}
+.hero-trust{display:flex;gap:20px;flex-wrap:wrap}
+.hero-trust-item{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--d40)}
+.hero-trust-item svg{color:var(--o)}
+
+/* Analyst card */
+.ac{background:#fff;border-radius:var(--r);padding:32px 28px;box-shadow:0 1px 3px rgba(0,0,0,.04),0 12px 40px rgba(0,0,0,.06);border:1px solid var(--d10);position:relative}
+.ac::before{content:'';position:absolute;top:-1px;left:28px;right:28px;height:3px;background:var(--o);border-radius:0 0 3px 3px}
+.ac-top{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.ac-av{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--o),#F59E0B);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#fff}
+.ac-name{font-size:17px;font-weight:800}.ac-role{font-size:12px;color:var(--d40)}
+.ac-creds{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.ac-cred{display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:500;color:var(--d60)}.ac-cred::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--o);flex-shrink:0}
+.ac-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--d10);border-radius:var(--rs);overflow:hidden;border:1px solid var(--d10)}
+.ac-stat{background:#fff;padding:12px 8px;text-align:center}
+.ac-stat-val{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700}.ac-stat-lbl{font-size:9px;color:var(--d40);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+
+/* ===== PROOF BAR ===== */
+.proof{background:var(--d);color:#fff}
+.proof-inner{display:grid;grid-template-columns:repeat(4,1fr)}
+.pb{padding:24px 16px;text-align:center;border-right:1px solid rgba(255,255,255,.06)}.pb:last-child{border:none}
+.pb-val{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700}.pb-lbl{font-size:10px;color:rgba(255,255,255,.35);margin-top:2px}
+
+/* ===== CREDENTIALS ===== */
+.creds{padding:44px 0;border-bottom:1px solid var(--d10)}
+.creds-flex{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.cred-pill{display:flex;align-items:center;gap:8px;padding:9px 16px;background:var(--cr);border:1px solid var(--d10);border-radius:100px;font-size:12px;font-weight:600;color:var(--d60);transition:.2s}
+.cred-pill:hover{border-color:var(--o);color:var(--o);transform:translateY(-1px)}
+.cred-div{width:1px;height:20px;background:var(--d10)}
+.uni-pill{padding:7px 14px;border:1px solid var(--d10);border-radius:100px;font-size:13px;font-weight:700;color:var(--d30)}
+
+/* ===== PROBLEM ===== */
+.problem{padding:120px 0}
+.problem-inner{max-width:800px;margin:0 auto;text-align:center}
+.problem h2{font-size:clamp(34px,4vw,50px);line-height:1.12;margin-bottom:16px}
+.problem h2 em{font-style:normal;color:var(--o)}
+.problem>p,.problem-inner>p{font-size:16px;color:var(--d50);margin-bottom:48px}
+.pain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--d10);border-radius:var(--r);overflow:hidden;border:1px solid var(--d10)}
+.pain-card{background:#fff;padding:36px 24px;text-align:left;transition:.2s}.pain-card:hover{background:var(--obg)}
+.pain-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--o);letter-spacing:1px;margin-bottom:12px}
+.pain-card h3{font-size:18px;margin-bottom:6px}.pain-card p{font-size:13.5px;color:var(--d50);line-height:1.6}
+
+/* ===== CASE STUDY ===== */
+.cs-sec{padding:120px 0;background-color:var(--d);background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:20px 20px;color:#fff;position:relative;overflow:hidden}
+.cs-sec::after{content:'';position:absolute;top:-200px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(232,83,14,.1),transparent 70%);pointer-events:none}
+.cs-header{margin-bottom:48px;position:relative;z-index:1}
+.cs-header h2{font-size:clamp(34px,4vw,50px);line-height:1.12;margin-bottom:10px}.cs-header h2 em{font-style:normal;color:var(--o)}
+.cs-header p{font-size:15px;color:rgba(255,255,255,.4);max-width:420px}
+.cs-grid{display:grid;grid-template-columns:1fr 320px;gap:44px;position:relative;z-index:1}
+.cs-steps{display:flex;flex-direction:column;gap:24px}
+.cs-step{display:flex;gap:18px}
+.cs-dot{width:36px;height:36px;border-radius:50%;background:rgba(232,83,14,.15);border:2px solid var(--o);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--o)}
+.cs-body{padding-top:2px}.cs-day{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--o);margin-bottom:3px}
+.cs-body h4{font-size:14px;font-weight:700;margin-bottom:3px}.cs-body p{font-size:12.5px;color:rgba(255,255,255,.4);line-height:1.55}
+.cs-sidebar{display:flex;flex-direction:column;gap:12px}
+.cs-stat{padding:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:var(--rs)}
+.cs-stat-val{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:var(--o)}.cs-stat-lbl{font-size:11px;color:rgba(255,255,255,.3);margin-top:2px}
+.cs-quote{padding:18px;background:rgba(232,83,14,.08);border-left:3px solid var(--o);border-radius:0 var(--rs) var(--rs) 0}
+.cs-quote p{font-size:13px;font-style:italic;color:rgba(255,255,255,.6);line-height:1.6;margin-bottom:4px}
+.cs-quote cite{font-size:11px;color:rgba(255,255,255,.3);font-style:normal}
+
+/* ===== SERVICES ===== */
+.services{padding:120px 0;background-color:var(--cr);background-image:radial-gradient(rgba(232,83,14,.06) .8px,transparent .8px);background-size:20px 20px}
+.svc-header{margin-bottom:40px}.svc-header h2{font-size:clamp(34px,4vw,50px);line-height:1.12;margin-bottom:10px}.svc-header p{font-size:15px;color:var(--d50);max-width:420px}
+.svc-tabs{display:inline-flex;background:#fff;border:1px solid var(--d10);border-radius:10px;padding:3px;margin-bottom:32px}
+.svc-tab{padding:9px 20px;border:none;background:transparent;color:var(--d40);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;border-radius:8px;transition:.2s}
+.svc-tab.active{background:var(--d);color:#fff}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.svc-card{background:#fff;border:1px solid var(--d10);border-radius:var(--r);padding:24px 20px;transition:.2s;display:flex;flex-direction:column}
+.svc-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.05);border-color:var(--o)}
+.svc-ico{width:36px;height:36px;border-radius:8px;background:var(--o10);display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.svc-card h4{font-size:15px;margin-bottom:4px}.svc-card p{font-size:12.5px;color:var(--d50);line-height:1.6;flex:1;margin-bottom:12px}
+.svc-price{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--o)}
+
+/* ===== PRICING ===== */
+.pricing{padding:120px 0}
+.pr-header{text-align:center;margin-bottom:48px}.pr-header h2{font-size:clamp(34px,4vw,50px);line-height:1.12;margin-bottom:10px}.pr-header p{font-size:15px;color:var(--d50)}
+.pr-tabs{display:inline-flex;background:var(--cr);border:1px solid var(--d10);border-radius:10px;padding:3px;margin-bottom:36px}
+.pr-tab{padding:9px 22px;border:none;background:transparent;color:var(--d40);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;border-radius:8px;transition:.2s}.pr-tab.active{background:var(--d);color:#fff}
+.pr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:960px;margin:0 auto}
+.pr-card{background:#fff;border:1.5px solid var(--d10);border-radius:var(--r);padding:32px 24px;display:flex;flex-direction:column;transition:.2s;position:relative}
+.pr-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.05)}
+.pr-card.pop{border-color:var(--o);background:var(--obg)}
+.pr-card.pop::after{content:'MOST POPULAR';position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;letter-spacing:1px;background:var(--o);color:#fff;padding:4px 12px;border-radius:100px;white-space:nowrap}
+.pr-card h3{font-size:20px;margin-bottom:3px}.pr-desc{font-size:12px;color:var(--d40);margin-bottom:18px}
+.pr-amt{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:700;letter-spacing:-1px;margin-bottom:2px}.pr-per{font-size:11px;color:var(--d40);margin-bottom:20px}
+.pf{list-style:none;margin-bottom:24px;flex:1}
+.pf li{font-size:12.5px;color:var(--d50);padding:7px 0;border-bottom:1px solid var(--d10);display:flex;align-items:flex-start;gap:8px}.pf li:last-child{border:none}
+.pf svg{width:14px;height:14px;flex-shrink:0;margin-top:2px}
+.pr-card .btn{width:100%;justify-content:center}
+
+/* ===== COMPARE ===== */
+.compare{padding:120px 0;background-color:var(--cr);background-image:linear-gradient(45deg,rgba(232,83,14,.02) 25%,transparent 25%),linear-gradient(-45deg,rgba(232,83,14,.02) 25%,transparent 25%),linear-gradient(45deg,transparent 75%,rgba(232,83,14,.02) 75%),linear-gradient(-45deg,transparent 75%,rgba(232,83,14,.02) 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0}
+.cmp-header{text-align:center;margin-bottom:48px}.cmp-header h2{font-size:clamp(34px,4vw,50px);line-height:1.12;margin-bottom:10px}.cmp-header p{font-size:15px;color:var(--d50)}
+.ct{max-width:880px;margin:0 auto;border-radius:var(--r);overflow:hidden;border:1px solid var(--d10);box-shadow:0 2px 16px rgba(0,0,0,.03)}
+.ct-row{display:grid;grid-template-columns:160px repeat(4,1fr);background:#fff}.ct-row:not(:last-child){border-bottom:1px solid var(--d10)}
+.ct-row.ct-h{background:var(--d);color:#fff}
+.ct-cell{padding:13px 12px;font-size:12px;color:var(--d50);display:flex;align-items:center}
+.ct-cell:first-child{font-weight:600;color:var(--d);font-size:11px;background:var(--d05)}.ct-cell:not(:first-child){justify-content:center;text-align:center;border-left:1px solid var(--d10)}
+.ct-cell.hl{background:var(--obg);font-weight:600;color:var(--d)}
+.ct-row.ct-h .ct-cell{font-size:11px;font-weight:700;justify-content:center}.ct-row.ct-h .ct-cell:first-child{justify-content:flex-start;background:transparent}.ct-row.ct-h .hl{background:var(--o)}
+.ct-y{color:var(--o);font-weight:700}.ct-n{color:var(--d20)}
+
+/* ===== TOOLS ===== */
+.tools{padding:72px 0;background-color:var(--d);background-image:radial-gradient(rgba(255,255,255,.03) 1px,transparent 1px);background-size:20px 20px;color:#fff;text-align:center}
+.tools-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:24px}
+.tools-row{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.tool{display:flex;align-items:center;gap:10px;padding:11px 20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;transition:.2s}
+.tool:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.12);transform:translateY(-2px)}
+.tool span{font-size:13px;font-weight:600;color:rgba(255,255,255,.8)}.tool small{font-size:10px;color:rgba(255,255,255,.3);display:block;margin-top:1px}
+
+/* ===== TEAM — Polaroid Style ===== */
+.team{padding:120px 0;background-color:var(--cr);background-image:radial-gradient(rgba(232,83,14,.05) .8px,transparent .8px);background-size:22px 22px;overflow:hidden}
+.team-header{margin-bottom:56px;text-align:center}.team-header h2{font-size:clamp(34px,4vw,50px);line-height:1.12;margin-bottom:10px}.team-header p{font-size:15px;color:var(--d50);max-width:500px;margin:0 auto}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px 24px;max-width:980px;margin:0 auto}
+.pol{background:#fff;border-radius:4px;padding:10px 10px 0;box-shadow:0 2px 8px rgba(0,0,0,.06),0 12px 40px rgba(0,0,0,.06);transition:all .35s cubic-bezier(.4,0,.2,1);cursor:default;position:relative}
+.pol:nth-child(1){transform:rotate(-1.5deg)}.pol:nth-child(2){transform:rotate(.8deg)}.pol:nth-child(3){transform:rotate(-0.5deg)}.pol:nth-child(4){transform:rotate(1.2deg)}.pol:nth-child(5){transform:rotate(-.8deg)}.pol:nth-child(6){transform:rotate(1.5deg)}
+.pol:hover{transform:rotate(0deg) translateY(-8px) scale(1.02)!important;box-shadow:0 4px 12px rgba(0,0,0,.08),0 24px 60px rgba(0,0,0,.1);z-index:5}
+.pol-img{width:100%;aspect-ratio:1/1;border-radius:2px;overflow:hidden;position:relative}
+.pol-grad{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+.pol-initials{font-size:48px;font-weight:800;color:rgba(255,255,255,.9);letter-spacing:-2px;text-shadow:0 2px 12px rgba(0,0,0,.15)}
+.pol-emoji{font-size:28px;position:absolute;bottom:10px;right:10px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.2));animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.pol:nth-child(2) .pol-emoji{animation-delay:.5s}.pol:nth-child(3) .pol-emoji{animation-delay:1s}.pol:nth-child(4) .pol-emoji{animation-delay:1.5s}.pol:nth-child(5) .pol-emoji{animation-delay:2s}.pol:nth-child(6) .pol-emoji{animation-delay:2.5s}
+.pol-role{position:absolute;top:8px;left:8px;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:100px;background:rgba(0,0,0,.45);color:#fff;backdrop-filter:blur(8px)}
+.pol-body{padding:14px 6px 18px}
+.pol-name{font-size:16px;font-weight:800;margin-bottom:1px;letter-spacing:-.3px}.pol-title{font-size:10.5px;color:var(--o);font-weight:600;margin-bottom:2px}.pol-loc{font-size:10px;color:var(--d30);margin-bottom:10px}
+.pol-quirk{font-size:11.5px;color:var(--d50);line-height:1.5;margin-bottom:12px;padding:10px 12px 10px 28px;background:var(--d05);border-radius:8px;position:relative;font-style:italic}
+.pol-quirk::before{content:'\201C';position:absolute;top:4px;left:8px;font-size:24px;color:var(--d20);font-family:Georgia,serif;line-height:1}
+.pol-tags{display:flex;flex-wrap:wrap;gap:3px}
+.pol-tag{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:500;padding:3px 7px;border-radius:100px;background:var(--o10);color:var(--o)}.pol-tag.s{background:var(--d05);color:var(--d40)}
+/* tape effect */
+.pol-tape{position:absolute;top:-6px;left:50%;transform:translateX(-50%) rotate(-2deg);width:56px;height:16px;background:rgba(255,243,200,.65);border-radius:1px;z-index:6}
+.pol:nth-child(2) .pol-tape{transform:translateX(-50%) rotate(1.5deg)}.pol:nth-child(3) .pol-tape{left:30%;transform:rotate(-1deg)}.pol:nth-child(4) .pol-tape{transform:translateX(-50%) rotate(-1.5deg)}.pol:nth-child(5) .pol-tape{left:60%;transform:rotate(1deg)}.pol:nth-child(6) .pol-tape{transform:translateX(-50%) rotate(2.5deg)}
+
+/* ===== SAMPLE / WHAT YOU GET — Horizontal Scroll ===== */
+.wyg{padding:100px 0;background:var(--d05);border-top:1px solid var(--d10);border-bottom:1px solid var(--d10);overflow:hidden}
+.wyg-header{margin-bottom:36px;display:flex;align-items:flex-end;justify-content:space-between}
+.wyg-header div:first-child h2{font-size:clamp(34px,4vw,50px);line-height:1.12;margin-bottom:6px}
+.wyg-header div:first-child p{font-size:14px;color:var(--d50)}
+.wyg-arrows{display:flex;gap:8px}
+.wyg-arr{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--d20);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;color:var(--d40)}
+.wyg-arr:hover{border-color:var(--o);color:var(--o);transform:scale(1.05)}
+.wyg-arr.disabled{opacity:.3;pointer-events:none}
+.wyg-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:8px}
+.wyg-track::-webkit-scrollbar{display:none}
+.wyg-card{flex:0 0 340px;scroll-snap-align:start;background:#fff;border:1px solid var(--d10);border-radius:var(--r);overflow:hidden;transition:.2s}
+.wyg-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.05);border-color:var(--o)}
+.wyg-card-top{padding:8px 10px;background:var(--d05);border-bottom:1px solid var(--d10);display:flex;align-items:center;gap:6px}
+.wyg-dot{width:7px;height:7px;border-radius:50%;background:var(--d20)}
+.wyg-card-top span{font-size:10px;color:var(--d40);margin-left:6px}
+.wyg-card-body{padding:20px}
+.wyg-card-body h4{font-size:14px;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.wyg-step-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;background:var(--o);color:#fff;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.wyg-card-body p{font-size:12px;color:var(--d50);line-height:1.6;margin-bottom:12px}
+.wyg-sample-table{width:100%;border-collapse:collapse;font-size:10px}
+.wyg-sample-table th{text-align:left;padding:5px 7px;background:var(--d05);font-weight:600;border:1px solid var(--d10);font-size:9px;text-transform:uppercase;letter-spacing:.3px}
+.wyg-sample-table td{padding:5px 7px;border:1px solid var(--d10);font-family:'JetBrains Mono',monospace;font-size:9px}
+.wyg-sample-table .sig{color:var(--o);font-weight:600}
+.wyg-highlight{padding:12px;background:var(--obg);border-radius:8px;font-size:11px;color:var(--d60);line-height:1.5}
+.wyg-highlight strong{color:var(--o)}
+.wyg-code{font-family:'JetBrains Mono',monospace;font-size:10px;background:var(--d);color:#aaa;padding:12px;border-radius:8px;line-height:1.6;overflow-x:auto}
+.wyg-code .kw{color:#F59E0B}.wyg-code .fn{color:#60A5FA}.wyg-code .cm{color:#555}
+
+/* ===== WHAT HAPPENS NEXT ===== */
+.whn{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.06);border-radius:var(--rs);overflow:hidden;margin-top:28px;border:1px solid rgba(255,255,255,.06)}
+.whn-step{padding:20px 16px;background:rgba(255,255,255,.02);text-align:center}
+.whn-step:hover{background:rgba(255,255,255,.04)}
+.whn-num{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--o);margin-bottom:6px}
+.whn-step h4{font-size:12px;font-weight:700;margin-bottom:3px;color:#fff}.whn-step p{font-size:10px;color:rgba(255,255,255,.35);line-height:1.4}
+
+/* ===== TESTIMONIALS ===== */
+.test{padding:120px 0}
+.test-header{text-align:center;margin-bottom:48px}.test-header h2{font-size:clamp(34px,4vw,50px);line-height:1.12;margin-bottom:10px}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:920px;margin:0 auto}
+.tc{background:#fff;border:1px solid var(--d10);border-radius:var(--r);padding:24px 20px;transition:.2s}
+.tc:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.04)}
+.tc-stars{color:var(--o);font-size:12px;letter-spacing:2px;margin-bottom:12px}
+.tc-text{font-size:13.5px;color:var(--d50);line-height:1.6;margin-bottom:16px;font-style:italic}
+.tc-author{display:flex;align-items:center;gap:10px}
+.tc-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--o),#F59E0B);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
+.tc-name{font-size:12px;font-weight:700}.tc-role{font-size:11px;color:var(--d40)}
+
+/* Urgency banner */
+.urg{margin-top:48px;max-width:920px;margin-left:auto;margin-right:auto;background:var(--d);color:#fff;border-radius:var(--r);padding:36px 40px;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;text-align:center}
+.urg-col h4{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:var(--o);margin-bottom:3px}
+.urg-col .urg-lbl{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.35);margin-bottom:8px}
+.urg-col p{font-size:11px;color:rgba(255,255,255,.4);line-height:1.5}
+.urg-col.hot{position:relative}.urg-col.hot::before{content:'MOST CLIENTS';position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:1px;background:var(--o);color:#fff;padding:3px 10px;border-radius:100px;white-space:nowrap}
+
+/* ===== FAQ ===== */
+.faq{padding:120px 0;background-color:var(--cr);background-image:linear-gradient(var(--d10) 1px,transparent 1px),linear-gradient(90deg,var(--d10) 1px,transparent 1px);background-size:48px 48px}
+.faq-inner{max-width:680px;margin:0 auto}
+.faq-header{text-align:center;margin-bottom:40px}.faq-header h2{font-size:clamp(34px,4vw,50px);line-height:1.12}
+.faq-item{border-bottom:1px solid var(--d10);background:rgba(255,255,255,.5);backdrop-filter:blur(4px)}
+.faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;padding:20px 16px;background:none;border:none;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;text-align:left;cursor:pointer;color:var(--d);gap:16px;transition:.15s}
+.faq-q:hover{color:var(--o)}
+.faq-icon{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--d10);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.25s;color:var(--d40);font-size:13px}
+.faq-item.open .faq-icon{background:var(--o);border-color:var(--o);color:#fff;transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s}.faq-item.open .faq-a{max-height:200px}
+.faq-a p{padding:0 16px 20px;font-size:13.5px;color:var(--d50);line-height:1.65}
+
+/* ===== CONTACT ===== */
+.contact{padding:120px 0;background:var(--d);color:#fff}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.contact h2{font-size:clamp(34px,4vw,50px);line-height:1.12;margin-bottom:10px}
+.contact-left>p{font-size:15px;color:rgba(255,255,255,.4);margin-bottom:28px}
+.ch{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:var(--rs);border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);text-decoration:none;color:#fff;transition:.2s;margin-bottom:10px}
+.ch:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);transform:translateX(4px)}
+.ch-ico{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ch-ico.msger{background:rgba(0,132,255,.15)}.ch-ico.mail{background:rgba(232,83,14,.15)}
+.ch h4{font-size:13px;font-weight:700;margin-bottom:1px}.ch p{font-size:11px;color:rgba(255,255,255,.3)}
+.pay-strip{margin-top:28px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pay-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.25)}
+.pay-badge{padding:5px 12px;border:1px solid rgba(255,255,255,.07);border-radius:100px;font-size:10px;font-weight:600;color:rgba(255,255,255,.35)}
+.cform{display:flex;flex-direction:column;gap:12px}
+.crow{display:flex;gap:10px}
+.cg{flex:1;display:flex;flex-direction:column;gap:4px}
+.cg label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35)}
+.cg input,.cg select,.cg textarea{padding:12px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:var(--rs);color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;transition:.2s}
+.cg input::placeholder,.cg textarea::placeholder{color:rgba(255,255,255,.18)}
+.cg input:focus,.cg select:focus,.cg textarea:focus{outline:none;border-color:var(--o)}
+.cg textarea{resize:vertical;min-height:80px}
+.cg select{appearance:none;cursor:pointer}.cg select option{background:#222;color:#fff}
+
+footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.06);background:var(--d)}
+footer .container{display:flex;justify-content:space-between;align-items:center}
+footer p{font-size:12px;color:rgba(255,255,255,.2)}footer a{color:var(--o);text-decoration:none}
+
+.sticky-cta{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--d10);padding:10px 0;z-index:98;transform:translateY(100%);transition:.3s;box-shadow:0 -4px 20px rgba(0,0,0,.05)}
+.sticky-cta.show{transform:none}
+.sticky-cta .container{display:flex;align-items:center;justify-content:space-between}
+.sticky-cta p{font-size:13px;font-weight:700}.sticky-cta p span{color:var(--d40);font-weight:400}
+
+@media(max-width:1024px){.hero-inner{grid-template-columns:1fr}.ac{display:none}.contact-grid{grid-template-columns:1fr}.cs-grid{grid-template-columns:1fr}.team-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.nav-links{display:none}.hamburger{display:block}.hero h1{font-size:36px;letter-spacing:-1.5px}.pain-grid,.svc-grid{grid-template-columns:1fr}.pr-grid{grid-template-columns:1fr;max-width:380px;margin:0 auto}.ct-row{grid-template-columns:100px repeat(4,1fr)}.ct-cell{font-size:9px;padding:10px 6px}.test-grid{grid-template-columns:1fr}.urg{grid-template-columns:1fr;text-align:left;padding:24px}.proof-inner{grid-template-columns:1fr 1fr}.pb{border-bottom:1px solid rgba(255,255,255,.06)}.crow{flex-direction:column}.sticky-cta p span{display:none}.tools-row{gap:8px}.tool{padding:8px 12px}.tool small{display:none}.team-grid{grid-template-columns:1fr 1fr}.pol{transform:none!important}.pol-initials{font-size:36px}.whn{grid-template-columns:1fr 1fr}.wyg-card{flex:0 0 280px}}
+</style>
+</head>
+<body>
+
+<nav id="nav"><div class="container">
+  <a href="#" class="logo"><span class="logo-mark"><svg viewBox="0 0 16 16" fill="none"><path d="M4 12L8 3l4 9M5.5 9h5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>StatCraft</a>
+  <div class="nav-links"><a href="#team">Team</a><a href="#services">Services</a><a href="#pricing">Pricing</a><a href="#reviews">Reviews</a><a href="#faq">FAQ</a></div>
+  <div class="nav-right"><button class="hamburger" onclick="toggleMenu()"><svg viewBox="0 0 24 24" width="24" height="24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="#1C1917" stroke-width="2" stroke-linecap="round"/></svg></button><a href="#contact" class="btn btn-o" style="padding:10px 22px;font-size:13px">Get a quote →</a></div>
+</div></nav>
+<div class="m-overlay" id="mOverlay" onclick="toggleMenu()"></div>
+<div class="mobile-menu" id="mMenu"><button class="mobile-close" onclick="toggleMenu()"><svg viewBox="0 0 20 20" width="20" height="20" fill="none"><path d="M15 5L5 15M5 5l10 10" stroke="#1C1917" stroke-width="2" stroke-linecap="round"/></svg></button><a href="#team" onclick="toggleMenu()">Team</a><a href="#services" onclick="toggleMenu()">Services</a><a href="#pricing" onclick="toggleMenu()">Pricing</a><a href="#reviews" onclick="toggleMenu()">Reviews</a><a href="#faq" onclick="toggleMenu()">FAQ</a><a href="#contact" class="btn btn-o" onclick="toggleMenu()">Get a quote →</a></div>
+
+<section class="hero"><div class="container"><div class="hero-inner">
+  <div>
+    <div class="hero-eyebrow"><span></span>Accepting clients for thesis season 2026</div>
+    <h1>Stop panicking about <em>Chapter 4.</em></h1>
+    <p class="hero-p">We handle statistical analysis, data cleaning, and write-up for Filipino thesis students — plus 1-on-1 math tutoring. You focus on defending.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-o">Get a free quote →</a>
+      <a href="https://m.me/statcraft" class="btn btn-out"><svg viewBox="0 0 20 20" width="16" height="16" fill="none"><path d="M10 1C5 1 1 4.6 1 9.1c0 2.5 1.2 4.7 3.2 6.2V19l3.6-2c.7.2 1.4.3 2.2.3 5 0 9-3.6 9-8.1S15 1 10 1z" fill="#0084FF"/><path d="M5 11l3-5 2.5 2.5L14 6l-3 5-2.5-2.5z" fill="#fff"/></svg>Message on Messenger</a>
+    </div>
+    <div class="hero-trust">
+      <div class="hero-trust-item"><svg viewBox="0 0 14 14" width="14" height="14" fill="none"><path d="M3 7.5l2.5 3L11 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>DOST-SEI Scholar</div>
+      <div class="hero-trust-item"><svg viewBox="0 0 14 14" width="14" height="14" fill="none"><path d="M3 7.5l2.5 3L11 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Published researcher</div>
+      <div class="hero-trust-item"><svg viewBox="0 0 14 14" width="14" height="14" fill="none"><path d="M3 7.5l2.5 3L11 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>100% on-time</div>
+    </div>
+  </div>
+  <div class="ac rv">
+    <div class="ac-top"><div class="ac-av">JQ</div><div><div class="ac-name">Jullana Jane Q.</div><div class="ac-role">Lead Statistical Analyst</div></div></div>
+    <div class="ac-creds"><div class="ac-cred">DOST-SEI Government Scholar</div><div class="ac-cred">BS Mathematics, Minor in Statistics — CMU</div><div class="ac-cred">Published in Algebraic Graph Theory</div><div class="ac-cred">Dean's Lister — Every Semester</div></div>
+    <div class="ac-stats"><div class="ac-stat"><div class="ac-stat-val">15+</div><div class="ac-stat-lbl">Projects</div></div><div class="ac-stat"><div class="ac-stat-val">100%</div><div class="ac-stat-lbl">On Time</div></div><div class="ac-stat"><div class="ac-stat-val">5.0</div><div class="ac-stat-lbl">Rating</div></div></div>
+  </div>
+</div></div></section>
+
+<section class="proof"><div class="proof-inner container"><div class="pb"><div class="pb-val">100%</div><div class="pb-lbl">On-time delivery</div></div><div class="pb"><div class="pb-val">0</div><div class="pb-lbl">Missed deadlines — ever</div></div><div class="pb"><div class="pb-val">&lt;24h</div><div class="pb-lbl">Response time</div></div><div class="pb"><div class="pb-val">5.0</div><div class="pb-lbl">Client rating</div></div></div></section>
+
+<section class="creds"><div class="container"><div class="creds-flex">
+  <div class="cred-pill rv"><svg viewBox="0 0 16 16" width="16" height="16" fill="none"><path d="M8 1l2 4h4l-3.5 3 1.5 4.5L8 10l-4 2.5L5.5 8 2 5h4z" stroke="#16A34A" stroke-width="1.2" stroke-linejoin="round"/></svg>DOST-SEI Scholar</div>
+  <div class="cred-pill rv"><svg viewBox="0 0 16 16" width="16" height="16" fill="none"><path d="M3 3h10v10H3z" stroke="#E8530E" stroke-width="1.2" stroke-linejoin="round"/><path d="M6 6h4M6 9h3" stroke="#E8530E" stroke-width="1.2" stroke-linecap="round"/></svg>Published Researcher</div>
+  <div class="cred-pill rv"><svg viewBox="0 0 16 16" width="16" height="16" fill="none"><path d="M8 1l1.5 3h3l-2.5 2 1 3.5L8 7.5 4.5 9.5l1-3.5-2.5-2h3z" stroke="#D97706" stroke-width="1.2" stroke-linejoin="round"/></svg>Dean's Lister</div>
+  <div class="cred-pill rv"><svg viewBox="0 0 16 16" width="16" height="16" fill="none"><text x="8" y="12" text-anchor="middle" font-family="serif" font-size="10" font-weight="bold" fill="#0050B4">Σ</text></svg>BS Math — CMU</div>
+  <div class="cred-div"></div>
+  <span class="uni-pill">CMU</span><span class="uni-pill">UP</span><span class="uni-pill">Ateneo</span><span class="uni-pill">UST</span><span class="uni-pill">DLSU</span>
+</div></div></section>
+
+<section class="problem"><div class="container"><div class="problem-inner rv">
+  <div class="mono" style="justify-content:center;margin-bottom:14px">The problem</div>
+  <h2>Thesis projects don't fail<br>because of <em>bad ideas.</em></h2>
+  <p>They fail because of chaotic data, wrong methodology, and panic at 2 AM.</p>
+  <div class="pain-grid">
+    <div class="pain-card"><div class="pain-num">01</div><h3>Your data is chaos</h3><p>Hundreds of survey responses. Missing values. Inconsistent formatting. Nobody taught you how to clean this.</p></div>
+    <div class="pain-card"><div class="pain-num">02</div><h3>Statistics feel impossible</h3><p>Regression? ANOVA? Your adviser says "run the analysis" like it's a button. You're Googling at 2 AM.</p></div>
+    <div class="pain-card"><div class="pain-num">03</div><h3>The deadline is real</h3><p>Defense is weeks away. Chapter 4 is empty. Every day you delay costs another semester of tuition.</p></div>
+  </div>
+</div></div></section>
+
+<section class="cs-sec"><div class="container">
+  <div class="cs-header rv"><div class="mono" style="color:var(--o)">Real project</div><h2>From panic to defense<br>in <em>12 days.</em></h2><p>An anonymized walkthrough of a real engagement.</p></div>
+  <div class="cs-grid">
+    <div class="cs-steps">
+      <div class="cs-step rv"><div class="cs-dot">1</div><div class="cs-body"><div class="cs-day">Day 1</div><h4>Client reaches out</h4><p>MBA student, marketing thesis. 247 survey responses in messy Excel. Defense in 3 weeks. Chapter 4 is blank.</p></div></div>
+      <div class="cs-step rv"><div class="cs-dot">2</div><div class="cs-body"><div class="cs-day">Day 2</div><h4>Analysis plan delivered</h4><p>3 constructs identified (IV, DV, mediator). Plan: cleaning → reliability → regression → mediation via SPSS.</p></div></div>
+      <div class="cs-step rv"><div class="cs-dot">3</div><div class="cs-body"><div class="cs-day">Day 3–7</div><h4>Execution</h4><p>Cleaned 23 incomplete responses. Cronbach's alpha (α > .80). Regression + Sobel test. All APA tables generated.</p></div></div>
+      <div class="cs-step rv"><div class="cs-dot">4</div><div class="cs-body"><div class="cs-day">Day 8–10</div><h4>Chapter 4 write-up</h4><p>6 APA tables, 2 figures, full interpretation. Reviewed via Google Meet screen-share.</p></div></div>
+      <div class="cs-step rv"><div class="cs-dot">5</div><div class="cs-body"><div class="cs-day">Day 12</div><h4>Adviser approves first submission</h4><p>Zero revisions. Client scheduled defense immediately.</p></div></div>
+    </div>
+    <div class="cs-sidebar rv">
+      <div class="cs-stat"><div class="cs-stat-val">12</div><div class="cs-stat-lbl">Days from panic to approval</div></div>
+      <div class="cs-stat"><div class="cs-stat-val">0</div><div class="cs-stat-lbl">Revisions from adviser</div></div>
+      <div class="cs-stat"><div class="cs-stat-val">6</div><div class="cs-stat-lbl">APA tables delivered</div></div>
+      <div class="cs-stat"><div class="cs-stat-val">₱6,000</div><div class="cs-stat-lbl">Total cost</div></div>
+      <div class="cs-quote"><p>"I went from nothing to an approved Chapter 4 in less than two weeks."</p><cite>— MBA Student, Marketing Research</cite></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ===== TEAM ===== -->
+<section class="team" id="team"><div class="container">
+  <div class="team-header rv"><div class="mono" style="justify-content:center">Meet the team</div><h2>Real people. Real credentials.<br>Slightly weird hobbies.</h2><p>You'll know exactly who's working on your data. No anonymous freelancers, no mystery "teams" — just us.</p></div>
+  <div class="team-grid">
+
+    <div class="pol rv"><div class="pol-tape"></div>
+      <div class="pol-img"><div class="pol-grad" style="background:linear-gradient(135deg,#E8530E,#F59E0B)"><div class="pol-initials">JQ</div><div class="pol-emoji">☕</div><div class="pol-role">Lead analyst</div></div></div>
+      <div class="pol-body">
+        <div class="pol-name">Jullana Jane Q.</div><div class="pol-title">Statistical Analyst & Math Tutor</div><div class="pol-loc">📍 Davao de Oro</div>
+        <div class="pol-quirk">Runs on 3 cups of coffee per analysis. Has a theory that ANOVA sounds like a planet.</div>
+        <div class="pol-tags"><span class="pol-tag">SPSS</span><span class="pol-tag">R</span><span class="pol-tag">Python</span><span class="pol-tag">AMOS</span><span class="pol-tag s">SEM</span><span class="pol-tag s">Factor Analysis</span></div>
+      </div>
+    </div>
+
+    <div class="pol rv"><div class="pol-tape"></div>
+      <div class="pol-img"><div class="pol-grad" style="background:linear-gradient(135deg,#1C1917,#57534E)"><div class="pol-initials">GQ</div><div class="pol-emoji">🎮</div><div class="pol-role">Operations</div></div></div>
+      <div class="pol-body">
+        <div class="pol-name">Godwin Q.</div><div class="pol-title">Project Manager & Client Experience</div><div class="pol-loc">📍 Philippines</div>
+        <div class="pol-quirk">Plays Dota 2 between client calls. Treats project timelines like ranked matches — no throwing.</div>
+        <div class="pol-tags"><span class="pol-tag s">Client comms</span><span class="pol-tag s">Scoping</span><span class="pol-tag s">QA</span><span class="pol-tag s">Delivery</span></div>
+      </div>
+    </div>
+
+    <div class="pol rv"><div class="pol-tape"></div>
+      <div class="pol-img"><div class="pol-grad" style="background:linear-gradient(135deg,#2166b8,#60A5FA)"><div class="pol-initials">RC</div><div class="pol-emoji">🧠</div><div class="pol-role">Specialist</div></div></div>
+      <div class="pol-body">
+        <div class="pol-name">Rafael C.</div><div class="pol-title">R & Python Specialist</div><div class="pol-loc">📍 Cebu City</div>
+        <div class="pol-quirk">Has a tattoo of a normal distribution curve. Not joking. Thinks in p-values.</div>
+        <div class="pol-tags"><span class="pol-tag">R</span><span class="pol-tag">Python</span><span class="pol-tag s">SEM</span><span class="pol-tag s">ML</span><span class="pol-tag s">Multi-level</span></div>
+      </div>
+    </div>
+
+    <div class="pol rv"><div class="pol-tape"></div>
+      <div class="pol-img"><div class="pol-grad" style="background:linear-gradient(135deg,#16A34A,#4ADE80)"><div class="pol-initials">AS</div><div class="pol-emoji">✍️</div><div class="pol-role">Writing</div></div></div>
+      <div class="pol-body">
+        <div class="pol-name">Angela S.</div><div class="pol-title">Academic Writing Specialist</div><div class="pol-loc">📍 Manila</div>
+        <div class="pol-quirk">Gets personally offended by misplaced commas. Owns 4 copies of the APA manual.</div>
+        <div class="pol-tags"><span class="pol-tag s">APA 7th</span><span class="pol-tag s">Academic writing</span><span class="pol-tag s">Proofreading</span></div>
+      </div>
+    </div>
+
+    <div class="pol rv"><div class="pol-tape"></div>
+      <div class="pol-img"><div class="pol-grad" style="background:linear-gradient(135deg,#7C3AED,#A78BFA)"><div class="pol-initials">MR</div><div class="pol-emoji">🧹</div><div class="pol-role">Data</div></div></div>
+      <div class="pol-body">
+        <div class="pol-name">Marco R.</div><div class="pol-title">Survey Design & Data Cleaning</div><div class="pol-loc">📍 Davao City</div>
+        <div class="pol-quirk">Once cleaned a 12,000-row dataset in one sitting. Calls Excel "the chaos engine."</div>
+        <div class="pol-tags"><span class="pol-tag">Excel</span><span class="pol-tag">Jamovi</span><span class="pol-tag s">Survey design</span><span class="pol-tag s">Data cleaning</span></div>
+      </div>
+    </div>
+
+    <div class="pol rv"><div class="pol-tape"></div>
+      <div class="pol-img"><div class="pol-grad" style="background:linear-gradient(135deg,#D97706,#FBBF24)"><div class="pol-initials">KL</div><div class="pol-emoji">🥭</div><div class="pol-role">Tutor</div></div></div>
+      <div class="pol-body">
+        <div class="pol-name">Karen L.</div><div class="pol-title">Math Tutor — Calculus & Algebra</div><div class="pol-loc">📍 Cagayan de Oro</div>
+        <div class="pol-quirk">Explains integrals using food analogies. Once taught derivatives using a mango ripening.</div>
+        <div class="pol-tags"><span class="pol-tag s">Algebra</span><span class="pol-tag s">Calculus</span><span class="pol-tag s">Pre-calc</span><span class="pol-tag s">Prob & Stats</span></div>
+      </div>
+    </div>
+
+  </div>
+</div></section>
+
+<!-- ===== WHAT YOU GET — Horizontal Scroll ===== -->
+<section class="wyg"><div class="container">
+  <div class="wyg-header rv">
+    <div><div class="mono">What you get</div><h2>Not just numbers.<br>Full deliverables.</h2><p>Other providers send raw SPSS output. We deliver thesis-ready work.</p></div>
+    <div class="wyg-arrows"><button class="wyg-arr disabled" onclick="wygScroll(-1)" id="wygL"><svg viewBox="0 0 16 16" width="16" height="16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="wyg-arr" onclick="wygScroll(1)" id="wygR"><svg viewBox="0 0 16 16" width="16" height="16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+  </div>
+  <div class="wyg-track" id="wygTrack">
+    <!-- Card 1: Cleaned Dataset -->
+    <div class="wyg-card">
+      <div class="wyg-card-top"><div class="wyg-dot"></div><div class="wyg-dot"></div><div class="wyg-dot"></div><span>cleaned_data.xlsx</span></div>
+      <div class="wyg-card-body">
+        <h4><span class="wyg-step-num">1</span>Cleaned Dataset</h4>
+        <p>Your raw data, transformed: duplicates removed, missing values handled, variables coded and labeled correctly.</p>
+        <div class="wyg-highlight">
+          <strong>247 → 224 valid responses</strong><br>
+          23 incompletes flagged & removed<br>
+          All Likert scales reverse-coded<br>
+          Ready for SPSS / R import
+        </div>
+      </div>
+    </div>
+    <!-- Card 2: Reliability Report -->
+    <div class="wyg-card">
+      <div class="wyg-card-top"><div class="wyg-dot"></div><div class="wyg-dot"></div><div class="wyg-dot"></div><span>reliability_report.docx</span></div>
+      <div class="wyg-card-body">
+        <h4><span class="wyg-step-num">2</span>Reliability Analysis</h4>
+        <p>Cronbach's alpha for every scale, item-total correlations, and a plain-English interpretation.</p>
+        <table class="wyg-sample-table">
+          <tr><th>Scale</th><th>Items</th><th>α</th><th>Verdict</th></tr>
+          <tr><td>Brand Trust</td><td>8</td><td class="sig">.891</td><td>Excellent</td></tr>
+          <tr><td>Perceived Quality</td><td>6</td><td class="sig">.847</td><td>Good</td></tr>
+          <tr><td>Purchase Intent</td><td>5</td><td class="sig">.823</td><td>Good</td></tr>
+        </table>
+      </div>
+    </div>
+    <!-- Card 3: APA Tables -->
+    <div class="wyg-card">
+      <div class="wyg-card-top"><div class="wyg-dot"></div><div class="wyg-dot"></div><div class="wyg-dot"></div><span>Chapter4_Tables.docx</span></div>
+      <div class="wyg-card-body">
+        <h4><span class="wyg-step-num">3</span>APA-Formatted Tables</h4>
+        <p>Publication-ready tables — paste directly into your Chapter 4. No reformatting needed.</p>
+        <table class="wyg-sample-table">
+          <tr><th>Predictor</th><th>β</th><th>SE</th><th>t</th><th>p</th></tr>
+          <tr><td>Brand Trust</td><td>.412</td><td>.067</td><td>6.15</td><td class="sig">&lt;.001***</td></tr>
+          <tr><td>Perceived Q.</td><td>.287</td><td>.072</td><td>3.99</td><td class="sig">&lt;.001***</td></tr>
+          <tr><td>Price Sens.</td><td>-.134</td><td>.059</td><td>-2.27</td><td class="sig">.024*</td></tr>
+        </table>
+      </div>
+    </div>
+    <!-- Card 4: Written Interpretation -->
+    <div class="wyg-card">
+      <div class="wyg-card-top"><div class="wyg-dot"></div><div class="wyg-dot"></div><div class="wyg-dot"></div><span>Chapter4_Results.docx</span></div>
+      <div class="wyg-card-body">
+        <h4><span class="wyg-step-num">4</span>Written Interpretation</h4>
+        <p>Not just tables — complete written results section your panel can follow.</p>
+        <div class="wyg-highlight">
+          "The regression model explained <strong>48.3%</strong> of variance in purchase intention (R² = .483, F(3, 243) = 75.82, p &lt; .001). Brand trust was the strongest predictor (β = .412, p &lt; .001), suggesting that..."
+        </div>
+      </div>
+    </div>
+    <!-- Card 5: SPSS / R Output -->
+    <div class="wyg-card">
+      <div class="wyg-card-top"><div class="wyg-dot"></div><div class="wyg-dot"></div><div class="wyg-dot"></div><span>analysis_output.R</span></div>
+      <div class="wyg-card-body">
+        <h4><span class="wyg-step-num">5</span>Full Analysis Output</h4>
+        <p>Raw SPSS/R output included so your panel can verify everything independently.</p>
+        <div class="wyg-code"><span class="cm"># Multiple regression</span><br><span class="fn">model</span> &lt;- <span class="fn">lm</span>(purchase_intent ~ <br>&nbsp;&nbsp;brand_trust + perc_quality +<br>&nbsp;&nbsp;price_sens, <span class="kw">data</span>=df)<br><span class="fn">summary</span>(model)<br><span class="cm"># R² = 0.483, p &lt; .001</span></div>
+      </div>
+    </div>
+    <!-- Card 6: Defense Prep -->
+    <div class="wyg-card">
+      <div class="wyg-card-top"><div class="wyg-dot"></div><div class="wyg-dot"></div><div class="wyg-dot"></div><span>defense_notes.pdf</span></div>
+      <div class="wyg-card-body">
+        <h4><span class="wyg-step-num">6</span>Defense Prep Guide</h4>
+        <p>A walkthrough of your results: what to say, what the numbers mean, and how to handle tough panel questions.</p>
+        <div class="wyg-highlight">
+          <strong>Panel might ask:</strong> "Why regression and not correlation?"<br><br>
+          <strong>Your answer:</strong> "Correlation shows association, but regression lets us predict purchase intent from multiple factors simultaneously while controlling for each..."
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section class="services" id="services"><div class="container">
+  <div class="svc-header rv"><div class="mono">Services</div><h2>Everything you need<br>to finish strong.</h2><p>Research analysis, thesis support, and 1-on-1 math tutoring.</p></div>
+  <div class="svc-tabs rv"><button class="svc-tab active" onclick="st('r',this)">Research & Thesis</button><button class="svc-tab" onclick="st('t',this)">Math Tutoring</button></div>
+  <div id="sR"><div class="svc-grid">
+    <div class="svc-card rv"><div class="svc-ico"><svg viewBox="0 0 18 18" width="18" height="18" fill="none"><path d="M3 15l3-3m0 0l2-6 6-2-2 6-6 2z" stroke="#E8530E" stroke-width="1.3" stroke-linejoin="round"/></svg></div><h4>Data Cleaning</h4><p>Raw → analysis-ready. Missing values, duplicates, formatting — fixed.</p><span class="svc-price">From ₱1,500</span></div>
+    <div class="svc-card rv"><div class="svc-ico"><svg viewBox="0 0 18 18" width="18" height="18" fill="none"><path d="M2 13l4-8 3 4 3-6 3 10" stroke="#E8530E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h4>Statistical Analysis</h4><p>Regression, ANOVA, chi-square — the right test, correctly applied.</p><span class="svc-price">From ₱3,000</span></div>
+    <div class="svc-card rv"><div class="svc-ico"><svg viewBox="0 0 18 18" width="18" height="18" fill="none"><path d="M3 3h12v12H3z" stroke="#E8530E" stroke-width="1.3" stroke-linejoin="round"/><path d="M3 7h12M7 3v12" stroke="#E8530E" stroke-width="1.3"/></svg></div><h4>Chapter 4 Write-Up</h4><p>Complete results & discussion with APA tables and figures.</p><span class="svc-price">From ₱5,000</span></div>
+    <div class="svc-card rv"><div class="svc-ico"><svg viewBox="0 0 18 18" width="18" height="18" fill="none"><circle cx="9" cy="9" r="6" stroke="#E8530E" stroke-width="1.3"/><path d="M9 6v3l2 2" stroke="#E8530E" stroke-width="1.3" stroke-linecap="round"/></svg></div><h4>Pilot Study Validation</h4><p>Scale validation, reliability testing, construct analysis.</p><span class="svc-price">From ₱500/scale</span></div>
+    <div class="svc-card rv"><div class="svc-ico"><svg viewBox="0 0 18 18" width="18" height="18" fill="none"><path d="M4 14V7l5-5 5 5v7" stroke="#E8530E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 14v-4h4v4" stroke="#E8530E" stroke-width="1.3"/></svg></div><h4>Methodology Review</h4><p>Audit your research design before it faces the panel.</p><span class="svc-price">From ₱2,000</span></div>
+    <div class="svc-card rv"><div class="svc-ico"><svg viewBox="0 0 18 18" width="18" height="18" fill="none"><path d="M9 1l2.5 5h5.5l-4.5 3.5 2 5.5-5.5-4-5.5 4 2-5.5L1 6h5.5z" stroke="#E8530E" stroke-width="1.3" stroke-linejoin="round"/></svg></div><h4>Full Thesis Package</h4><p>End-to-end: design → clean → analyze → write → defend.</p><span class="svc-price">From ₱8,000</span></div>
+  </div></div>
+  <div id="sT" style="display:none"><div class="svc-grid">
+    <div class="svc-card rv vis"><div class="svc-ico"><svg viewBox="0 0 18 18" width="18" height="18" fill="none"><path d="M3 9h12M9 3v12" stroke="#E8530E" stroke-width="1.3" stroke-linecap="round"/></svg></div><h4>Algebra & Pre-Calc</h4><p>Equations, functions, polynomials, trig.</p><span class="svc-price">₱300/hr</span></div>
+    <div class="svc-card rv vis"><div class="svc-ico"><svg viewBox="0 0 18 18" width="18" height="18" fill="none"><path d="M3 15Q5 3 9 9Q13 15 15 3" stroke="#E8530E" stroke-width="1.3" fill="none"/></svg></div><h4>Calculus</h4><p>Limits, derivatives, integrals. Concepts, not formulas.</p><span class="svc-price">₱350/hr</span></div>
+    <div class="svc-card rv vis"><div class="svc-ico"><svg viewBox="0 0 18 18" width="18" height="18" fill="none"><rect x="2" y="7" width="3" height="7" rx="1" stroke="#E8530E" stroke-width="1.3"/><rect x="7.5" y="3" width="3" height="11" rx="1" stroke="#E8530E" stroke-width="1.3"/><rect x="13" y="5" width="3" height="9" rx="1" stroke="#E8530E" stroke-width="1.3"/></svg></div><h4>Statistics</h4><p>Distributions, hypothesis testing, regression.</p><span class="svc-price">₱350/hr</span></div>
+    <div class="svc-card rv vis"><div class="svc-ico"><svg viewBox="0 0 18 18" width="18" height="18" fill="none"><path d="M5 3v12M13 3v12M5 9h8" stroke="#E8530E" stroke-width="1.3" stroke-linecap="round"/></svg></div><h4>Defense Coaching</h4><p>Walk through results, face the panel confidently.</p><span class="svc-price">₱500/hr</span></div>
+    <div class="svc-card rv vis"><div class="svc-ico"><svg viewBox="0 0 18 18" width="18" height="18" fill="none"><circle cx="9" cy="9" r="6" stroke="#E8530E" stroke-width="1.3"/><path d="M7 9h4M9 7v4" stroke="#E8530E" stroke-width="1.3" stroke-linecap="round"/></svg></div><h4>Monthly Package</h4><p>4 sessions/month. Best for ongoing support.</p><span class="svc-price">₱1,200/mo</span></div>
+  </div></div>
+</div></section>
+
+<section class="pricing" id="pricing"><div class="container">
+  <div class="pr-header rv"><div class="mono" style="justify-content:center">Pricing</div><h2>Simple, transparent pricing.</h2><p>All PHP. No hidden fees.</p>
+    <div style="margin-top:18px"><div class="pr-tabs"><button class="pr-tab active" onclick="switchPr('thesis',this)">Thesis & Analysis</button><button class="pr-tab" onclick="switchPr('pilot',this)">Pilot Study</button><button class="pr-tab" onclick="switchPr('tutor',this)">Tutoring</button></div></div>
+  </div>
+  <div id="prThesis"><div class="pr-grid">
+    <div class="pr-card rv"><h3>Starter</h3><p class="pr-desc">One task or quick fix.</p><div class="pr-amt">₱2,000</div><div class="pr-per">per engagement</div><ul class="pf"><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Single statistical test</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Data cleaning (1 dataset)</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>APA output tables</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>1 revision round</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>5–7 day delivery</li></ul><a href="#contact" class="btn btn-out">Get started →</a></div>
+    <div class="pr-card pop rv"><h3>Complete</h3><p class="pr-desc">Full analysis + write-up.</p><div class="pr-amt">₱6,000</div><div class="pr-per">per engagement</div><ul class="pf"><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Full cleaning & analysis</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Chapter 4 + tables & figures</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Methodology verification</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>3 revision rounds</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Support until defense</li></ul><a href="#contact" class="btn btn-o">Get started →</a></div>
+    <div class="pr-card rv"><h3>Premium</h3><p class="pr-desc">End-to-end + defense prep.</p><div class="pr-amt">₱12,000</div><div class="pr-per">per engagement</div><ul class="pf"><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Everything in Complete</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Research design consulting</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>1-on-1 defense walkthrough</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited revisions</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Priority 3-day turnaround</li></ul><a href="#contact" class="btn btn-out">Get started →</a></div>
+  </div></div>
+  <div id="prPilot" style="display:none"><div class="pr-grid">
+    <div class="pr-card rv"><h3>1–2 Scales</h3><p class="pr-desc">Single or dual construct.</p><div class="pr-amt">₱500</div><div class="pr-per">per scale</div><ul class="pf"><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Reliability (Cronbach's α)</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Item-total correlation</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Interpretation report</li></ul><a href="#contact" class="btn btn-out">Get started →</a></div>
+    <div class="pr-card pop rv"><h3>3–4 Scales</h3><p class="pr-desc">Standard IV/DV/mediator.</p><div class="pr-amt">₱450</div><div class="pr-per">per scale</div><ul class="pf"><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Everything in 1–2 Scales</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Exploratory factor analysis</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Construct validity check</li></ul><a href="#contact" class="btn btn-o">Get started →</a></div>
+    <div class="pr-card rv"><h3>5+ Scales</h3><p class="pr-desc">Complex multi-factorial.</p><div class="pr-amt">₱400</div><div class="pr-per">per scale</div><ul class="pf"><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Everything in 3–4 Scales</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Confirmatory factor analysis</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited revisions</li></ul><a href="#contact" class="btn btn-out">Get started →</a></div>
+  </div></div>
+  <div id="prTutor" style="display:none"><div class="pr-grid">
+    <div class="pr-card rv"><h3>Single Session</h3><p class="pr-desc">Targeted help.</p><div class="pr-amt">₱350</div><div class="pr-per">per hour</div><ul class="pf"><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Algebra, Calculus, or Stats</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>1-on-1 via Google Meet</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Custom lesson plan</li></ul><a href="#contact" class="btn btn-out">Book a session →</a></div>
+    <div class="pr-card pop rv"><h3>Monthly</h3><p class="pr-desc">4 sessions/month.</p><div class="pr-amt">₱1,200</div><div class="pr-per">per month</div><ul class="pf"><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Save ₱200 vs individual</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Progress tracking</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Messenger support</li></ul><a href="#contact" class="btn btn-o">Get started →</a></div>
+    <div class="pr-card rv"><h3>Defense Coach</h3><p class="pr-desc">Understand your data.</p><div class="pr-amt">₱500</div><div class="pr-per">per hour</div><ul class="pf"><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Walk through your results</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Anticipate panel questions</li><li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Methodology deep-dive</li></ul><a href="#contact" class="btn btn-out">Book coaching →</a></div>
+  </div></div>
+</div></section>
+
+<section class="compare"><div class="container">
+  <div class="cmp-header rv"><div class="mono" style="justify-content:center">How we compare</div><h2>See the difference.</h2><p>Compare your options honestly.</p></div>
+  <div class="ct rv">
+    <div class="ct-row ct-h"><div class="ct-cell"></div><div class="ct-cell">DIY</div><div class="ct-cell">FB Freelancer</div><div class="ct-cell">Other Labs</div><div class="ct-cell hl">StatCraft</div></div>
+    <div class="ct-row"><div class="ct-cell">Qualified analyst</div><div class="ct-cell"><span class="ct-n">✕</span></div><div class="ct-cell"><span class="ct-n">Varies</span></div><div class="ct-cell"><span class="ct-n">Varies</span></div><div class="ct-cell hl"><span class="ct-y">✓</span></div></div>
+    <div class="ct-row"><div class="ct-cell">Full interpretation</div><div class="ct-cell"><span class="ct-n">✕</span></div><div class="ct-cell"><span class="ct-n">✕</span></div><div class="ct-cell"><span class="ct-n">Rarely</span></div><div class="ct-cell hl"><span class="ct-y">✓</span></div></div>
+    <div class="ct-row"><div class="ct-cell">APA write-up</div><div class="ct-cell"><span class="ct-n">✕</span></div><div class="ct-cell"><span class="ct-n">✕</span></div><div class="ct-cell"><span class="ct-n">Extra ₱</span></div><div class="ct-cell hl"><span class="ct-y">✓ Included</span></div></div>
+    <div class="ct-row"><div class="ct-cell">Transparent pricing</div><div class="ct-cell">Free</div><div class="ct-cell"><span class="ct-n">"DM for price"</span></div><div class="ct-cell"><span class="ct-n">Hidden</span></div><div class="ct-cell hl"><span class="ct-y">✓ Public</span></div></div>
+    <div class="ct-row"><div class="ct-cell">Defense coaching</div><div class="ct-cell"><span class="ct-n">✕</span></div><div class="ct-cell"><span class="ct-n">✕</span></div><div class="ct-cell"><span class="ct-n">✕</span></div><div class="ct-cell hl"><span class="ct-y">✓</span></div></div>
+    <div class="ct-row"><div class="ct-cell">Refund guarantee</div><div class="ct-cell"><span class="ct-n">✕</span></div><div class="ct-cell"><span class="ct-n">✕</span></div><div class="ct-cell"><span class="ct-n">Limited</span></div><div class="ct-cell hl"><span class="ct-y">✓ Full</span></div></div>
+  </div>
+</div></section>
+
+<section class="tools"><div class="container">
+  <div class="tools-label">Tools & platforms we use</div>
+  <div class="tools-row">
+    <div class="tool rv"><svg viewBox="0 0 24 24" width="24" height="24"><rect width="24" height="24" rx="5" fill="#c00"/><text x="12" y="16" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#fff">SPSS</text></svg><div><span>SPSS</span><small>Industry standard</small></div></div>
+    <div class="tool rv"><svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="11" fill="#2166b8"/><text x="12" y="17" text-anchor="middle" font-family="serif" font-size="15" font-weight="bold" fill="#fff">R</text></svg><div><span>R</span><small>Statistical computing</small></div></div>
+    <div class="tool rv"><svg viewBox="0 0 24 24" width="24" height="24"><rect width="24" height="24" rx="5" fill="#3776ab"/><text x="12" y="16" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#FFD43B">Py</text></svg><div><span>Python</span><small>Data science</small></div></div>
+    <div class="tool rv"><svg viewBox="0 0 24 24" width="24" height="24"><rect width="24" height="24" rx="5" fill="#1d6f42"/><text x="12" y="16" text-anchor="middle" font-family="Arial" font-size="13" font-weight="bold" fill="#fff">X</text></svg><div><span>Excel</span><small>Advanced analysis</small></div></div>
+    <div class="tool rv"><svg viewBox="0 0 24 24" width="24" height="24"><rect width="24" height="24" rx="5" fill="#008080"/><text x="12" y="15.5" text-anchor="middle" font-family="Georgia" font-size="9" fill="#fff">LaTeX</text></svg><div><span>LaTeX</span><small>Typesetting</small></div></div>
+    <div class="tool rv"><svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="11" fill="#6c5ce7"/><text x="12" y="16" text-anchor="middle" font-family="Arial" font-size="10" font-weight="bold" fill="#fff">j</text></svg><div><span>Jamovi</span><small>Open-source</small></div></div>
+    <div class="tool rv"><svg viewBox="0 0 24 24" width="24" height="24"><rect width="24" height="24" rx="5" fill="#0f4c81"/><text x="12" y="15.5" text-anchor="middle" font-family="Arial" font-size="7" font-weight="bold" fill="#fff">AMOS</text></svg><div><span>AMOS</span><small>SEM modeling</small></div></div>
+  </div>
+</div></section>
+
+<section class="test" id="reviews"><div class="container">
+  <div class="test-header rv"><div class="mono" style="justify-content:center">Reviews</div><h2>They defended. You can too.</h2></div>
+  <div class="test-grid">
+    <div class="tc rv"><div class="tc-stars">★★★★★</div><p class="tc-text">"Stuck on Chapter 4 for three months. StatCraft delivered a complete analysis with 6 APA tables in five days. My adviser at UST approved it on the first submission — no revisions."</p><div class="tc-author"><div class="tc-av">MA</div><div><div class="tc-name">Maria A.</div><div class="tc-role">MBA Marketing Research · UST</div></div></div></div>
+    <div class="tc rv"><div class="tc-stars">★★★★★</div><p class="tc-text">"What surprised me was they didn't just send SPSS output — they walked me through every result on Google Meet so I actually understood what to say during defense. Zero panel questions I couldn't answer."</p><div class="tc-author"><div class="tc-av">JR</div><div><div class="tc-name">James R.</div><div class="tc-role">BS Psychology · CMU</div></div></div></div>
+    <div class="tc rv"><div class="tc-stars">★★★★★</div><p class="tc-text">"I was failing calculus. After 6 tutoring sessions, I went from a 1.75 to top 10 in class. Jullana explains things the way I wish my professor did."</p><div class="tc-author"><div class="tc-av">DM</div><div><div class="tc-name">Daniel M.</div><div class="tc-role">BS Civil Engineering · DLSU</div></div></div></div>
+  </div>
+  <div class="urg rv">
+    <div class="urg-col"><h4>1 month+</h4><div class="urg-lbl">Comfortable</div><p>Full package, coaching, no rush fees.</p></div>
+    <div class="urg-col hot"><h4>2–3 weeks</h4><div class="urg-lbl">Tight but doable</div><p>Complete analysis + Chapter 4. Most common.</p></div>
+    <div class="urg-col"><h4>≤ 1 week</h4><div class="urg-lbl">Emergency</div><p>Rush delivery. Message us NOW.</p></div>
+  </div>
+</div></section>
+
+<section class="faq" id="faq"><div class="container"><div class="faq-inner">
+  <div class="faq-header rv"><div class="mono" style="justify-content:center">FAQ</div><h2>Common questions.</h2></div>
+  <div class="faq-item rv"><button class="faq-q" onclick="tf(this)">Is this considered cheating?<span class="faq-icon">+</span></button><div class="faq-a"><p>No. Statistical consulting is a legitimate academic service worldwide. You own the research and defend it. We also offer tutoring so you understand every result.</p></div></div>
+  <div class="faq-item rv"><button class="faq-q" onclick="tf(this)">What tools do you use?<span class="faq-icon">+</span></button><div class="faq-a"><p>SPSS, R, Python, Excel, LaTeX, Jamovi, AMOS — matched to your project requirements.</p></div></div>
+  <div class="faq-item rv"><button class="faq-q" onclick="tf(this)">How fast can you deliver?<span class="faq-icon">+</span></button><div class="faq-a"><p>Standard: 5–7 days. Rush: 1–3 days with surcharge. 100% on-time delivery record.</p></div></div>
+  <div class="faq-item rv"><button class="faq-q" onclick="tf(this)">Do you offer tutoring?<span class="faq-icon">+</span></button><div class="faq-a"><p>Yes! 1-on-1 math tutoring and thesis coaching via Google Meet.</p></div></div>
+  <div class="faq-item rv"><button class="faq-q" onclick="tf(this)">What if my adviser wants changes?<span class="faq-icon">+</span></button><div class="faq-a"><p>All plans include revision rounds. Errors on our end are always free to fix.</p></div></div>
+  <div class="faq-item rv"><button class="faq-q" onclick="tf(this)">Is my data confidential?<span class="faq-icon">+</span></button><div class="faq-a"><p>Absolutely. NDA available. We never share or reference any client data.</p></div></div>
+  <div class="faq-item rv"><button class="faq-q" onclick="tf(this)">How do I pay?<span class="faq-icon">+</span></button><div class="faq-a"><p>GCash, PayMaya, ShopeePay, or bank transfer. 50% upfront, 50% on delivery.</p></div></div>
+  <div class="faq-item rv"><button class="faq-q" onclick="tf(this)">Refund policy?<span class="faq-icon">+</span></button><div class="faq-a"><p>Can't deliver or output doesn't meet standards? Full refund. No questions.</p></div></div>
+</div></div></section>
+
+<section class="contact" id="contact"><div class="container"><div class="contact-grid">
+  <div class="contact-left">
+    <div class="mono" style="color:var(--o)">Get started</div>
+    <h2>Start your project.</h2>
+    <p>Free consultation. No commitment. We review your project and send a fixed quote within 24 hours.</p>
+    <a href="https://m.me/statcraft" class="ch"><div class="ch-ico msger"><svg viewBox="0 0 20 20" width="18" height="18" fill="none"><path d="M10 1C5 1 1 4.6 1 9.1c0 2.5 1.2 4.7 3.2 6.2V19l3.6-2c.7.2 1.4.3 2.2.3 5 0 9-3.6 9-8.1S15 1 10 1z" fill="#0084FF"/></svg></div><div><h4>Message on Messenger</h4><p>Fastest — usually within the hour</p></div></a>
+    <a href="mailto:hello@statcraft.ph" class="ch"><div class="ch-ico mail"><svg viewBox="0 0 20 20" width="18" height="18" fill="none"><rect x="2" y="4" width="16" height="12" rx="2" stroke="#E8530E" stroke-width="1.5"/><path d="M2 6l8 5 8-5" stroke="#E8530E" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><h4>Email us</h4><p>hello@statcraft.ph</p></div></a>
+    <div class="pay-strip"><span class="pay-label">We accept</span><span class="pay-badge">GCash</span><span class="pay-badge">PayMaya</span><span class="pay-badge">Bank Transfer</span><span class="pay-badge">ShopeePay</span></div>
+    <div class="whn">
+      <div class="whn-step"><div class="whn-num">1</div><h4>Message us</h4><p>Tell us your topic & deadline</p></div>
+      <div class="whn-step"><div class="whn-num">2</div><h4>Free review</h4><p>We assess your project scope</p></div>
+      <div class="whn-step"><div class="whn-num">3</div><h4>Fixed quote</h4><p>Clear price within 24 hours</p></div>
+      <div class="whn-step"><div class="whn-num">4</div><h4>We deliver</h4><p>Pay 50% to start, 50% on delivery</p></div>
+    </div>
+  </div>
+  <form class="cform" onsubmit="hs(event)">
+    <div class="cg"><label>Name</label><input placeholder="Full name" required></div>
+    <div class="cg"><label>Email or Messenger link</label><input placeholder="you@email.com or m.me/yourname" required></div>
+    <div class="cg"><label>Tell us about your project</label><textarea placeholder="What do you need help with? Include your topic, deadline, and any details. The more you share, the faster we can quote." style="min-height:140px"></textarea></div>
+    <button type="submit" class="btn btn-o" style="align-self:flex-start">Send message \u2192</button>
+    <p style="font-size:11px;color:rgba(255,255,255,.25);margin-top:4px">We respond within 24 hours. Usually much faster.</p>
+  </form>
+</div></div></section>
+
+<footer><div class="container"><p>\u00a9 2026 StatCraft</p><p><a href="mailto:hello@statcraft.ph">hello@statcraft.ph</a></p></div></footer>
+
+<div class="sticky-cta" id="stickyCta"><div class="container"><p>Ready to start? <span>— Free quote in 24h</span></p><div style="display:flex;gap:8px"><a href="https://m.me/statcraft" class="btn btn-d" style="padding:10px 18px;font-size:12px"><svg viewBox="0 0 20 20" width="13" height="13" fill="none"><path d="M10 1C5 1 1 4.6 1 9.1c0 2.5 1.2 4.7 3.2 6.2V19l3.6-2c.7.2 1.4.3 2.2.3 5 0 9-3.6 9-8.1S15 1 10 1z" fill="#fff"/></svg>Messenger</a><a href="#contact" class="btn btn-o" style="padding:10px 18px;font-size:12px">Get a quote →</a></div></div></div>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>20);document.getElementById('stickyCta').classList.toggle('show',window.scrollY>800)});
+const ob=new IntersectionObserver(e=>e.forEach((x,i)=>{if(x.isIntersecting){setTimeout(()=>x.target.classList.add('vis'),i*30);ob.unobserve(x.target)}}),{threshold:.05});
+document.querySelectorAll('.rv').forEach(el=>ob.observe(el));
+const co=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){const el=x.target.querySelector('[data-count]');if(el){const t=+el.dataset.count,s=el.dataset.suffix||'+';let c=0;const iv=setInterval(()=>{c+=Math.ceil(t/20);if(c>=t){c=t;clearInterval(iv)}el.textContent=c+s},40)}co.unobserve(x.target)}})},{threshold:.5});
+document.querySelectorAll('.pb').forEach(el=>co.observe(el));
+function toggleMenu(){document.getElementById('mMenu').classList.toggle('open');document.getElementById('mOverlay').classList.toggle('open')}
+function st(t,b){document.querySelectorAll('.svc-tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById('sR').style.display=t==='r'?'':'none';document.getElementById('sT').style.display=t==='t'?'':'none'}
+function tf(b){const i=b.parentElement,o=i.classList.contains('open');document.querySelectorAll('.faq-item').forEach(x=>x.classList.remove('open'));if(!o)i.classList.add('open')}
+function switchPr(tab,btn){document.querySelectorAll('.pr-tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.getElementById('prThesis').style.display=tab==='thesis'?'':'none';document.getElementById('prPilot').style.display=tab==='pilot'?'':'none';document.getElementById('prTutor').style.display=tab==='tutor'?'':'none'}
+function hs(e){e.preventDefault();const b=e.target.querySelector('button[type="submit"]');b.textContent='Sent! Response within 24h \u2713';b.style.background='#16A34A';setTimeout(()=>{b.textContent='Send message \u2192';b.style.background=''},3000)}
+// What you get horizontal scroll
+function wygScroll(dir){const t=document.getElementById('wygTrack');t.scrollBy({left:dir*356,behavior:'smooth'})}
+(function(){const t=document.getElementById('wygTrack');if(t){t.addEventListener('scroll',()=>{document.getElementById('wygL').classList.toggle('disabled',t.scrollLeft<10);document.getElementById('wygR').classList.toggle('disabled',t.scrollLeft>=t.scrollWidth-t.clientWidth-10)})}})();
+</script>
+</body>
+</html>
