@@ -37,7 +37,7 @@ export default function Navbar() {
         <div className="container flex items-center justify-between">
           <a href="#" className="no-underline transition-all duration-300">
             <Image
-              src="/logo-dark.png"
+              src="/logo-dark-new.png"
               alt="StatCraft"
               width={132}
               height={32}
