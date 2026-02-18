@@ -3,6 +3,7 @@
 import { useState } from "react";
 import SectionLabel from "@/components/ui/SectionLabel";
 import RevealOnScroll from "@/components/ui/RevealOnScroll";
+import TabSwitcher from "@/components/ui/TabSwitcher";
 import { ServiceIcon } from "@/components/ui/Icons";
 import { researchServices, tutoringServices } from "@/data/services";
 import type { ServiceCard } from "@/data/services";
@@ -38,18 +39,16 @@ export default function Services() {
         </RevealOnScroll>
 
         <RevealOnScroll>
-          <div className="inline-flex bg-d10 rounded-full p-[2px] mb-8">
-            {(["research", "tutoring"] as const).map((t) => (
-              <button
-                key={t}
-                onClick={() => setTab(t)}
-                className={`px-3 py-[4px] border-none font-sans text-[11px] font-semibold cursor-pointer rounded-full transition-all ${
-                  tab === t ? "bg-d text-white" : "bg-transparent text-d40 hover:text-d60"
-                }`}
-              >
-                {t === "research" ? "Research & Thesis" : "Math Tutoring"}
-              </button>
-            ))}
+          <div className="mb-8">
+            <TabSwitcher
+              tabs={[
+                { value: "research", label: "Research & Thesis" },
+                { value: "tutoring", label: "Math Tutoring" },
+              ]}
+              active={tab}
+              onChange={(v) => setTab(v as "research" | "tutoring")}
+              layoutId="services-tab"
+            />
           </div>
         </RevealOnScroll>
 

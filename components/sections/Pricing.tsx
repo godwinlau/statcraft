@@ -4,6 +4,7 @@ import { useState } from "react";
 import SectionLabel from "@/components/ui/SectionLabel";
 import RevealOnScroll from "@/components/ui/RevealOnScroll";
 import Button from "@/components/ui/Button";
+import TabSwitcher from "@/components/ui/TabSwitcher";
 import { CheckSmallIcon } from "@/components/ui/Icons";
 import { thesisPricing, pilotPricing, tutorPricing } from "@/data/pricing";
 import type { PricingTier } from "@/data/pricing";
@@ -63,19 +64,16 @@ export default function Pricing() {
             <h2 className="text-[length:var(--h2)] leading-[1.12] mb-2.5 mt-2">Simple, transparent pricing.</h2>
             <p className="text-base text-d50">All PHP. No hidden fees.</p>
             <div className="mt-4.5">
-              <div className="inline-flex bg-d10 rounded-full p-[2px]">
-                {(["thesis", "pilot", "tutor"] as Tab[]).map((t) => (
-                  <button
-                    key={t}
-                    onClick={() => setTab(t)}
-                    className={`px-3 py-[4px] border-none font-sans text-[11px] font-semibold cursor-pointer rounded-full transition-all ${
-                      tab === t ? "bg-d text-white" : "bg-transparent text-d40 hover:text-d60"
-                    }`}
-                  >
-                    {t === "thesis" ? "Thesis & Analysis" : t === "pilot" ? "Pilot Study" : "Tutoring"}
-                  </button>
-                ))}
-              </div>
+              <TabSwitcher
+                tabs={[
+                  { value: "thesis", label: "Thesis & Analysis" },
+                  { value: "pilot", label: "Pilot Study" },
+                  { value: "tutor", label: "Tutoring" },
+                ]}
+                active={tab}
+                onChange={(v) => setTab(v as Tab)}
+                layoutId="pricing-tab"
+              />
             </div>
           </div>
         </RevealOnScroll>
