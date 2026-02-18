@@ -22,41 +22,43 @@ export default function Compare() {
         </RevealOnScroll>
 
         <RevealOnScroll>
-          <div className="max-w-[880px] mx-auto rounded-card overflow-hidden shadow-subtle">
-            {/* Header */}
-            <div className="grid grid-cols-[160px_repeat(4,1fr)] max-md:grid-cols-[100px_repeat(4,1fr)] bg-d text-white">
-              <div className="p-[13px_12px] text-[12px] font-bold flex items-center" />
-              <div className="p-[13px_12px] text-[12px] font-bold flex items-center justify-center border-l border-d10">DIY</div>
-              <div className="p-[13px_12px] text-[12px] font-bold flex items-center justify-center border-l border-d10">FB Freelancer</div>
-              <div className="p-[13px_12px] text-[12px] font-bold flex items-center justify-center border-l border-d10">Other Labs</div>
-              <div className="p-[13px_12px] text-[12px] font-bold flex items-center justify-center border-l border-d10 bg-o">StatCraft</div>
-            </div>
-
-            {/* Rows */}
-            {compareRows.map((row, i) => (
-              <div
-                key={row.feature}
-                className={`grid grid-cols-[160px_repeat(4,1fr)] max-md:grid-cols-[100px_repeat(4,1fr)] bg-white ${
-                  i < compareRows.length - 1 ? "border-b border-d10" : ""
-                }`}
-              >
-                <div className="p-[13px_12px] text-[12px] max-md:text-[10px] font-semibold text-d bg-d05 flex items-center">
-                  {row.feature}
-                </div>
-                <div className="p-[13px_12px] text-[13px] max-md:text-[10px] max-md:p-[10px_6px] text-d50 flex items-center justify-center text-center border-l border-d10">
-                  <CellContent value={row.diy} isStatcraft={false} />
-                </div>
-                <div className="p-[13px_12px] text-[13px] max-md:text-[10px] max-md:p-[10px_6px] text-d50 flex items-center justify-center text-center border-l border-d10">
-                  <CellContent value={row.fbFreelancer} isStatcraft={false} />
-                </div>
-                <div className="p-[13px_12px] text-[13px] max-md:text-[10px] max-md:p-[10px_6px] text-d50 flex items-center justify-center text-center border-l border-d10">
-                  <CellContent value={row.otherLabs} isStatcraft={false} />
-                </div>
-                <div className="p-[13px_12px] text-[13px] max-md:text-[10px] max-md:p-[10px_6px] font-semibold text-d flex items-center justify-center text-center border-l border-d10 bg-obg">
-                  <CellContent value={row.statcraft} isStatcraft={true} />
-                </div>
+          <div className="max-w-[880px] mx-auto rounded-card overflow-hidden shadow-subtle max-md:overflow-x-auto">
+            <div className="min-w-[540px]">
+              {/* Header */}
+              <div className="grid grid-cols-[160px_repeat(4,1fr)] bg-d text-white">
+                <div className="p-[13px_12px] text-[12px] font-bold flex items-center" />
+                <div className="p-[13px_12px] text-[12px] font-bold flex items-center justify-center border-l border-d10">DIY</div>
+                <div className="p-[13px_12px] text-[12px] font-bold flex items-center justify-center border-l border-d10">FB Freelancer</div>
+                <div className="p-[13px_12px] text-[12px] font-bold flex items-center justify-center border-l border-d10">Other Labs</div>
+                <div className="p-[13px_12px] text-[12px] font-bold flex items-center justify-center border-l border-d10 bg-o">StatCraft</div>
               </div>
-            ))}
+
+              {/* Rows */}
+              {compareRows.map((row, i) => (
+                <div
+                  key={row.feature}
+                  className={`grid grid-cols-[160px_repeat(4,1fr)] bg-white ${
+                    i < compareRows.length - 1 ? "border-b border-d10" : ""
+                  }`}
+                >
+                  <div className="p-[13px_12px] text-[12px] font-semibold text-d bg-d05 flex items-center">
+                    {row.feature}
+                  </div>
+                  <div className="p-[13px_12px] text-[13px] text-d50 flex items-center justify-center text-center border-l border-d10">
+                    <CellContent value={row.diy} isStatcraft={false} />
+                  </div>
+                  <div className="p-[13px_12px] text-[13px] text-d50 flex items-center justify-center text-center border-l border-d10">
+                    <CellContent value={row.fbFreelancer} isStatcraft={false} />
+                  </div>
+                  <div className="p-[13px_12px] text-[13px] text-d50 flex items-center justify-center text-center border-l border-d10">
+                    <CellContent value={row.otherLabs} isStatcraft={false} />
+                  </div>
+                  <div className="p-[13px_12px] text-[13px] font-semibold text-d flex items-center justify-center text-center border-l border-d10 bg-obg">
+                    <CellContent value={row.statcraft} isStatcraft={true} />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </RevealOnScroll>
       </div>
