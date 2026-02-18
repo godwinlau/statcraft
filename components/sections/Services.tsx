@@ -9,11 +9,11 @@ import type { ServiceCard } from "@/data/services";
 
 function Card({ card }: { card: ServiceCard }) {
   return (
-    <div className="bg-white border border-d10 rounded-card p-6 px-5 transition-all duration-200 flex flex-col hover:-translate-y-0.5 hover:shadow-card hover:border-o">
+    <div className="bg-white rounded-card p-6 px-5 transition-all duration-200 flex flex-col hover:-translate-y-0.5 hover:shadow-card">
       <div className="w-9 h-9 rounded-lg bg-o10 flex items-center justify-center mb-3">
         <ServiceIcon icon={card.icon} />
       </div>
-      <h4 className="text-base mb-1">{card.title}</h4>
+      <h4 className="text-base font-extrabold mb-1">{card.title}</h4>
       <p className="text-[14px] text-d50 leading-relaxed flex-1 mb-3">{card.description}</p>
       <span className="font-mono text-[13px] font-medium text-o">{card.price}</span>
     </div>
@@ -25,7 +25,7 @@ export default function Services() {
   const cards = tab === "research" ? researchServices : tutoringServices;
 
   return (
-    <section id="services" className="py-30 bg-cr bg-orange-dots">
+    <section id="services" className="py-30 max-md:py-16 bg-d05 bg-orange-dots">
       <div className="container">
         <RevealOnScroll>
           <div className="mb-10">
@@ -38,23 +38,18 @@ export default function Services() {
         </RevealOnScroll>
 
         <RevealOnScroll>
-          <div className="inline-flex bg-white border border-d10 rounded-btn p-[3px] mb-8">
-            <button
-              onClick={() => setTab("research")}
-              className={`px-5 py-[9px] border-none bg-transparent font-sans text-[14px] font-bold cursor-pointer rounded-lg transition-all ${
-                tab === "research" ? "bg-d text-white" : "text-d40"
-              }`}
-            >
-              Research & Thesis
-            </button>
-            <button
-              onClick={() => setTab("tutoring")}
-              className={`px-5 py-[9px] border-none bg-transparent font-sans text-[14px] font-bold cursor-pointer rounded-lg transition-all ${
-                tab === "tutoring" ? "bg-d text-white" : "text-d40"
-              }`}
-            >
-              Math Tutoring
-            </button>
+          <div className="inline-flex bg-d10 rounded-full p-[2px] mb-8">
+            {(["research", "tutoring"] as const).map((t) => (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                className={`px-3 py-[4px] border-none font-sans text-[11px] font-semibold cursor-pointer rounded-full transition-all ${
+                  tab === t ? "bg-d text-white" : "bg-transparent text-d40 hover:text-d60"
+                }`}
+              >
+                {t === "research" ? "Research & Thesis" : "Math Tutoring"}
+              </button>
+            ))}
           </div>
         </RevealOnScroll>
 

@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { LogoMark, HamburgerIcon, CloseIcon } from "@/components/ui/Icons";
+import Image from "next/image";
+import { HamburgerIcon, CloseIcon } from "@/components/ui/Icons";
 import Button from "@/components/ui/Button";
 
 const links = [
@@ -27,21 +28,21 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 w-full z-100 py-3.5 border-b transition-all duration-300 ${
+        className={`fixed top-0 w-full z-100 py-3.5 transition-all duration-300 ${
           scrolled
-            ? "bg-cr/92 backdrop-blur-2xl border-d10 shadow-nav"
-            : "bg-transparent border-transparent"
+            ? "bg-cr/92 backdrop-blur-2xl shadow-nav"
+            : "bg-transparent"
         }`}
       >
         <div className="container flex items-center justify-between">
-          <a
-            href="#"
-            className={`text-[length:var(--h5)] font-extrabold no-underline flex items-center gap-2 tracking-tight transition-colors duration-300 ${
-              scrolled ? "text-d" : "text-white"
-            }`}
-          >
-            <LogoMark />
-            StatCraft
+          <a href="#" className="no-underline transition-all duration-300">
+            <Image
+              src="/logo-dark.png"
+              alt="StatCraft"
+              width={132}
+              height={32}
+              className="transition-all duration-300"
+            />
           </a>
           <div className="hidden md:flex gap-7">
             {links.map((l) => (
@@ -49,7 +50,7 @@ export default function Navbar() {
                 key={l.href}
                 href={l.href}
                 className={`text-base font-medium no-underline transition-colors duration-300 ${
-                  scrolled ? "text-d50 hover:text-d" : "text-white/80 hover:text-white"
+                  scrolled ? "text-d50 hover:text-d" : "text-d50 hover:text-d"
                 }`}
               >
                 {l.label}
@@ -60,9 +61,11 @@ export default function Navbar() {
             <button className="md:hidden bg-transparent border-none cursor-pointer p-2" onClick={toggleMenu}>
               <HamburgerIcon />
             </button>
-            <Button href="#contact" className="!py-2.5 !px-[22px] !text-[14px]">
-              Get a quote {"\u2192"}
-            </Button>
+            <div className="hidden md:block">
+              <Button href="#contact" className="!py-2.5 !px-[22px] !text-[14px]">
+                Send your data {"\u2192"}
+              </Button>
+            </div>
           </div>
         </div>
       </nav>
@@ -89,13 +92,13 @@ export default function Navbar() {
             key={l.href}
             href={l.href}
             onClick={toggleMenu}
-            className="block py-3.5 text-base font-semibold text-d no-underline border-b border-d10"
+            className="block py-3.5 text-base font-semibold text-d no-underline"
           >
             {l.label}
           </a>
         ))}
         <Button href="#contact" className="mt-4" onClick={toggleMenu}>
-          Get a quote {"\u2192"}
+          Send your data {"\u2192"}
         </Button>
       </div>
     </>

@@ -1,12 +1,14 @@
 import { type ReactNode } from "react";
 
-type Variant = "orange" | "dark" | "outline" | "ghost";
+type Variant = "orange" | "dark" | "outline" | "ghost" | "white";
 
 const variantStyles: Record<Variant, string> = {
   orange:
-    "bg-o text-white hover:bg-oh hover:-translate-y-0.5 hover:shadow-orange",
+    "bg-gradient-to-b from-[#FF6A33] to-[#FF4400] text-white border-[1.5px] border-o hover:from-[#FF5722] hover:to-[#E63E00] hover:-translate-y-0.5 hover:shadow-orange",
+  white:
+    "bg-white text-d border-[1.5px] border-d10 hover:border-d20 hover:-translate-y-0.5 hover:shadow-subtle",
   dark:
-    "bg-d text-white hover:bg-d80 hover:-translate-y-0.5",
+    "bg-d text-white border-[1.5px] border-d hover:bg-d80 hover:-translate-y-0.5",
   outline:
     "bg-transparent text-d border-[1.5px] border-d20 hover:border-d hover:-translate-y-0.5",
   ghost:
@@ -33,7 +35,7 @@ export default function Button({
   style,
 }: ButtonProps) {
   const base =
-    "inline-flex items-center gap-2 px-[30px] py-[14px] rounded-btn font-sans text-base font-semibold cursor-pointer transition-all duration-200 no-underline border-none";
+    "inline-flex items-center justify-center gap-2 px-[30px] py-[14px] rounded-btn font-sans text-base font-semibold cursor-pointer transition-all duration-200 no-underline";
 
   if (href) {
     return (

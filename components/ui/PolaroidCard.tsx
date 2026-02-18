@@ -29,7 +29,7 @@ export default function PolaroidCard({
 }) {
   return (
     <div
-      className="bg-white rounded-[4px] p-[10px] pb-0 shadow-polaroid transition-all duration-350 cursor-default relative hover:!rotate-0 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-card-hover hover:z-5"
+      className="bg-white rounded-card p-[10px] pb-0 transition-all duration-350 cursor-default relative hover:!rotate-0 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-card-hover hover:z-5"
       style={{ transform: rotations[index] }}
     >
       {/* Tape */}
@@ -43,7 +43,7 @@ export default function PolaroidCard({
       />
 
       {/* Image area */}
-      <div className="w-full aspect-square rounded-[2px] overflow-hidden relative">
+      <div className="w-full aspect-square rounded-[10px] overflow-hidden relative">
         {member.image ? (
           <div className="w-full h-full relative">
             <img
@@ -84,10 +84,7 @@ export default function PolaroidCard({
         <div className="text-base font-extrabold mb-px tracking-tight">{member.name}</div>
         <div className="text-[12px] text-o font-semibold mb-0.5">{member.title}</div>
         <div className="text-[11px] text-d30 mb-2.5">{"\uD83D\uDCCD"} {member.location}</div>
-        <div className="text-[13px] text-d50 leading-relaxed mb-3 px-3 py-2.5 pl-7 bg-d05 rounded-lg relative italic">
-          <span className="absolute top-1 left-2 text-[length:var(--h4)] text-d20 font-serif leading-none">{"\u201C"}</span>
-          {member.quirk}
-        </div>
+
         <div className="flex flex-wrap gap-[3px]">
           {member.tags.map((tag) => (
             <span

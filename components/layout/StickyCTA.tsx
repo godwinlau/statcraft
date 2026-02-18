@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { MessengerWhiteIcon } from "@/components/ui/Icons";
+import { MessengerIcon } from "@/components/ui/Icons";
 import Button from "@/components/ui/Button";
 
 export default function StickyCTA() {
@@ -15,7 +15,7 @@ export default function StickyCTA() {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 bg-white border-t border-d10 py-2.5 z-[98] transition-transform duration-300 shadow-sticky ${
+      className={`fixed bottom-0 left-0 right-0 bg-white py-2.5 z-[98] transition-transform duration-300 shadow-sticky ${
         show ? "translate-y-0" : "translate-y-full"
       }`}
     >
@@ -24,13 +24,15 @@ export default function StickyCTA() {
           Ready to start? <span className="text-d40 font-normal max-md:hidden">{"\u2014"} Free quote in 24h</span>
         </p>
         <div className="flex gap-2">
-          <Button variant="dark" href="https://m.me/statcraft" className="!py-2.5 !px-[18px] !text-[13px]">
-            <MessengerWhiteIcon />
+          <Button variant="white" href="https://m.me/statcraft" className="!py-2.5 !px-[18px] !text-[13px]">
+            <MessengerIcon />
             Messenger
           </Button>
-          <Button href="#contact" className="!py-2.5 !px-[18px] !text-[13px]">
-            Get a quote {"\u2192"}
-          </Button>
+          <div className="hidden md:block">
+            <Button href="#contact" className="!py-2.5 !px-[18px] !text-[13px]">
+              Send your data {"\u2192"}
+            </Button>
+          </div>
         </div>
       </div>
     </div>

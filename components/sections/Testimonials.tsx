@@ -4,7 +4,7 @@ import { testimonials } from "@/data/testimonials";
 
 export default function Testimonials() {
   return (
-    <section id="reviews" className="py-30">
+    <section id="reviews" className="py-30 max-md:py-16">
       <div className="container">
         <RevealOnScroll>
           <div className="text-center mb-12">
@@ -14,13 +14,16 @@ export default function Testimonials() {
         </RevealOnScroll>
 
         <div className="grid grid-cols-3 gap-3.5 max-w-[920px] mx-auto max-md:grid-cols-1">
-          {testimonials.map((t) => (
+          {testimonials.map((t, i) => (
             <RevealOnScroll key={t.name}>
-              <div className="bg-white border border-d10 rounded-card p-6 px-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card">
-                <div className="text-o text-[13px] tracking-[2px] mb-3">{"\u2605\u2605\u2605\u2605\u2605"}</div>
-                <p className="text-base text-d50 leading-relaxed mb-4 italic">{t.text}</p>
+              <div className="bg-white rounded-card p-7 px-6 flex flex-col h-full shadow-subtle transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card">
+                <div className="flex items-center gap-2 mb-5">
+                  <span className="w-5 h-[2px] bg-o" />
+                  <span className="text-[13px] font-semibold text-d40">{String(i + 1).padStart(2, "0")}</span>
+                </div>
+                <p className="text-[15px] font-semibold text-d leading-[1.7] mb-6 flex-1">{t.text}</p>
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-o to-amber-400 flex items-center justify-center text-[12px] font-bold text-white">
+                  <div className="w-8 h-8 rounded-full bg-o flex items-center justify-center text-[12px] font-bold text-white">
                     {t.initials}
                   </div>
                   <div>
@@ -41,10 +44,7 @@ export default function Testimonials() {
               <div className="text-[11px] uppercase tracking-[1px] text-white/35 mb-2">Comfortable</div>
               <p className="text-[12px] text-white/40 leading-relaxed">Full package, coaching, no rush fees.</p>
             </div>
-            <div className="relative">
-              <span className="absolute -top-6 left-1/2 -translate-x-1/2 font-mono text-[9px] tracking-[1px] bg-o text-white px-2.5 py-[3px] rounded-full whitespace-nowrap max-md:left-0 max-md:translate-x-0">
-                MOST CLIENTS
-              </span>
+            <div>
               <h4 className="font-mono text-[length:var(--h4)] font-bold text-o mb-[3px]">2{"\u2013"}3 weeks</h4>
               <div className="text-[11px] uppercase tracking-[1px] text-white/35 mb-2">Tight but doable</div>
               <p className="text-[12px] text-white/40 leading-relaxed">Complete analysis + Chapter 4. Most common.</p>

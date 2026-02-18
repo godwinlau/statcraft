@@ -21,18 +21,18 @@ const pains = [
 
 export default function Problem() {
   return (
-    <section className="py-30">
+    <section className="py-30 max-md:py-16">
       <div className="container">
         <RevealOnScroll>
           <div className="max-w-[800px] mx-auto text-center">
             <SectionLabel center>The problem</SectionLabel>
             <h2 className="text-[length:var(--h2)] leading-[1.12] mb-4 mt-3.5">
-              Thesis projects don{"\u2019"}t fail<br />because of <em className="not-italic text-o">bad ideas.</em>
+              Thesis projects don{"\u2019"}t fail<br />because of <em className="not-italic bg-gradient-to-b from-[#FF6A33] to-[#FF4400] bg-clip-text text-transparent">bad ideas.</em>
             </h2>
             <p className="text-base text-d50 mb-12">
               They fail because of chaotic data, wrong methodology, and panic at 2 AM.
             </p>
-            <div className="grid grid-cols-3 gap-px bg-d10 rounded-card overflow-hidden border border-d10 max-md:grid-cols-1">
+            <div className="grid grid-cols-3 gap-px bg-d10 rounded-card overflow-hidden max-md:grid-cols-1">
               {pains.map((p) => (
                 <div key={p.num} className="bg-white p-9 px-6 text-left transition-colors hover:bg-obg">
                   <div className="font-mono text-[12px] text-o tracking-[1px] mb-3">{p.num}</div>

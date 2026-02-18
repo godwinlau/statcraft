@@ -11,29 +11,29 @@ import type { PricingTier } from "@/data/pricing";
 function PriceCard({ tier }: { tier: PricingTier }) {
   return (
     <div
-      className={`bg-white border-[1.5px] rounded-card p-8 px-6 flex flex-col transition-all duration-200 relative hover:-translate-y-0.5 hover:shadow-card ${
-        tier.popular ? "border-o bg-obg" : "border-d10"
+      className={`rounded-card p-8 px-6 flex flex-col transition-all duration-200 relative hover:-translate-y-0.5 hover:shadow-card ${
+        tier.popular ? "bg-o text-white" : "bg-white"
       }`}
     >
       {tier.popular && (
-        <span className="absolute -top-[11px] left-1/2 -translate-x-1/2 font-mono text-[10px] font-semibold tracking-[1px] bg-o text-white px-3 py-1 rounded-full whitespace-nowrap">
+        <span className="absolute -top-[11px] left-1/2 -translate-x-1/2 font-mono text-[10px] font-semibold tracking-[1px] bg-white text-o px-3 py-1 rounded-full whitespace-nowrap">
           MOST POPULAR
         </span>
       )}
       <h3 className="text-[length:var(--h6)] mb-[3px]">{tier.name}</h3>
-      <p className="text-[13px] text-d40 mb-4.5">{tier.description}</p>
+      <p className={`text-[13px] mb-4.5 ${tier.popular ? "text-white/70" : "text-d40"}`}>{tier.description}</p>
       <div className="font-mono text-[length:var(--h3)] font-bold tracking-tight mb-0.5">{tier.amount}</div>
-      <div className="text-[12px] text-d40 mb-5">{tier.per}</div>
+      <div className={`text-[12px] mb-5 ${tier.popular ? "text-white/70" : "text-d40"}`}>{tier.per}</div>
       <ul className="list-none mb-6 flex-1">
         {tier.features.map((f) => (
-          <li key={f} className="text-[14px] text-d50 py-[7px] border-b border-d10 last:border-none flex items-start gap-2">
-            <CheckSmallIcon className="shrink-0 mt-0.5" />
+          <li key={f} className={`text-[14px] py-[7px] flex items-start gap-2 ${tier.popular ? "text-white/80" : "text-d50"}`}>
+            <CheckSmallIcon className={`shrink-0 mt-0.5 ${tier.popular ? "text-white" : "text-o"}`} />
             {f}
           </li>
         ))}
       </ul>
       <Button
-        variant={tier.popular ? "orange" : "outline"}
+        variant={tier.popular ? "white" : "outline"}
         href="#contact"
         className="w-full !justify-center"
       >
@@ -55,7 +55,7 @@ export default function Pricing() {
   const [tab, setTab] = useState<Tab>("thesis");
 
   return (
-    <section id="pricing" className="py-30">
+    <section id="pricing" className="py-30 max-md:py-16">
       <div className="container">
         <RevealOnScroll>
           <div className="text-center mb-12">
@@ -63,13 +63,13 @@ export default function Pricing() {
             <h2 className="text-[length:var(--h2)] leading-[1.12] mb-2.5 mt-2">Simple, transparent pricing.</h2>
             <p className="text-base text-d50">All PHP. No hidden fees.</p>
             <div className="mt-4.5">
-              <div className="inline-flex bg-cr border border-d10 rounded-btn p-[3px]">
+              <div className="inline-flex bg-d10 rounded-full p-[2px]">
                 {(["thesis", "pilot", "tutor"] as Tab[]).map((t) => (
                   <button
                     key={t}
                     onClick={() => setTab(t)}
-                    className={`px-[22px] py-[9px] border-none bg-transparent font-sans text-[14px] font-bold cursor-pointer rounded-lg transition-all ${
-                      tab === t ? "bg-d text-white" : "text-d40"
+                    className={`px-3 py-[4px] border-none font-sans text-[11px] font-semibold cursor-pointer rounded-full transition-all ${
+                      tab === t ? "bg-d text-white" : "bg-transparent text-d40 hover:text-d60"
                     }`}
                   >
                     {t === "thesis" ? "Thesis & Analysis" : t === "pilot" ? "Pilot Study" : "Tutoring"}

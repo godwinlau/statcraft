@@ -9,7 +9,7 @@ export function CheckIcon({ className = "" }: { className?: string }) {
 export function CheckSmallIcon({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 14 14" width="14" height="14" fill="none" className={className}>
-      <path d="M3 7.5l2.5 3L9 4" stroke="#E8530E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M3 7.5l2.5 3L9 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -115,73 +115,8 @@ export function MathIcon() {
   );
 }
 
-// Service icons
-export function ServiceIcon({ icon }: { icon: string }) {
-  const iconMap: Record<string, React.ReactNode> = {
-    compass: (
-      <svg viewBox="0 0 18 18" width="18" height="18" fill="none">
-        <path d="M3 15l3-3m0 0l2-6 6-2-2 6-6 2z" stroke="#E8530E" strokeWidth="1.3" strokeLinejoin="round" />
-      </svg>
-    ),
-    chart: (
-      <svg viewBox="0 0 18 18" width="18" height="18" fill="none">
-        <path d="M2 13l4-8 3 4 3-6 3 10" stroke="#E8530E" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-    table: (
-      <svg viewBox="0 0 18 18" width="18" height="18" fill="none">
-        <path d="M3 3h12v12H3z" stroke="#E8530E" strokeWidth="1.3" strokeLinejoin="round" />
-        <path d="M3 7h12M7 3v12" stroke="#E8530E" strokeWidth="1.3" />
-      </svg>
-    ),
-    clock: (
-      <svg viewBox="0 0 18 18" width="18" height="18" fill="none">
-        <circle cx="9" cy="9" r="6" stroke="#E8530E" strokeWidth="1.3" />
-        <path d="M9 6v3l2 2" stroke="#E8530E" strokeWidth="1.3" strokeLinecap="round" />
-      </svg>
-    ),
-    house: (
-      <svg viewBox="0 0 18 18" width="18" height="18" fill="none">
-        <path d="M4 14V7l5-5 5 5v7" stroke="#E8530E" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M7 14v-4h4v4" stroke="#E8530E" strokeWidth="1.3" />
-      </svg>
-    ),
-    star: (
-      <svg viewBox="0 0 18 18" width="18" height="18" fill="none">
-        <path d="M9 1l2.5 5h5.5l-4.5 3.5 2 5.5-5.5-4-5.5 4 2-5.5L1 6h5.5z" stroke="#E8530E" strokeWidth="1.3" strokeLinejoin="round" />
-      </svg>
-    ),
-    plus: (
-      <svg viewBox="0 0 18 18" width="18" height="18" fill="none">
-        <path d="M3 9h12M9 3v12" stroke="#E8530E" strokeWidth="1.3" strokeLinecap="round" />
-      </svg>
-    ),
-    wave: (
-      <svg viewBox="0 0 18 18" width="18" height="18" fill="none">
-        <path d="M3 15Q5 3 9 9Q13 15 15 3" stroke="#E8530E" strokeWidth="1.3" fill="none" />
-      </svg>
-    ),
-    bars: (
-      <svg viewBox="0 0 18 18" width="18" height="18" fill="none">
-        <rect x="2" y="7" width="3" height="7" rx="1" stroke="#E8530E" strokeWidth="1.3" />
-        <rect x="7.5" y="3" width="3" height="11" rx="1" stroke="#E8530E" strokeWidth="1.3" />
-        <rect x="13" y="5" width="3" height="9" rx="1" stroke="#E8530E" strokeWidth="1.3" />
-      </svg>
-    ),
-    columns: (
-      <svg viewBox="0 0 18 18" width="18" height="18" fill="none">
-        <path d="M5 3v12M13 3v12M5 9h8" stroke="#E8530E" strokeWidth="1.3" strokeLinecap="round" />
-      </svg>
-    ),
-    "circle-plus": (
-      <svg viewBox="0 0 18 18" width="18" height="18" fill="none">
-        <circle cx="9" cy="9" r="6" stroke="#E8530E" strokeWidth="1.3" />
-        <path d="M7 9h4M9 7v4" stroke="#E8530E" strokeWidth="1.3" strokeLinecap="round" />
-      </svg>
-    ),
-  };
-  return <>{iconMap[icon] || null}</>;
-}
+// Service icons — Lucide Animated with auto-loop
+export { AnimatedServiceIcon as ServiceIcon } from "@/components/ui/AnimatedServiceIcon";
 
 export function ToolSvgIcon({ icon }: { icon: { type: string; bg: string; text: string; textColor: string; fontSize?: string; fontFamily?: string } }) {
   if (icon.type === "circle") {

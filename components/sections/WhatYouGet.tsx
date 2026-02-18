@@ -32,7 +32,7 @@ export default function WhatYouGet() {
   };
 
   return (
-    <section className="py-[100px] bg-d05 border-t border-b border-d10 overflow-hidden">
+    <section className="py-[100px] bg-d05 overflow-hidden">
       <div className="container">
         <RevealOnScroll>
           <div className="mb-9 flex items-end justify-between">
@@ -47,7 +47,7 @@ export default function WhatYouGet() {
               <button
                 onClick={() => scroll(-1)}
                 disabled={atStart}
-                className={`w-10 h-10 rounded-full border-[1.5px] border-d20 bg-white flex items-center justify-center cursor-pointer transition-all text-d40 hover:border-o hover:text-o hover:scale-105 ${
+                className={`w-10 h-10 rounded-full bg-white shadow-subtle flex items-center justify-center cursor-pointer transition-all text-d40 hover:text-o hover:scale-105 ${
                   atStart ? "opacity-30 pointer-events-none" : ""
                 }`}
               >
@@ -56,7 +56,7 @@ export default function WhatYouGet() {
               <button
                 onClick={() => scroll(1)}
                 disabled={atEnd}
-                className={`w-10 h-10 rounded-full border-[1.5px] border-d20 bg-white flex items-center justify-center cursor-pointer transition-all text-d40 hover:border-o hover:text-o hover:scale-105 ${
+                className={`w-10 h-10 rounded-full bg-white shadow-subtle flex items-center justify-center cursor-pointer transition-all text-d40 hover:text-o hover:scale-105 ${
                   atEnd ? "opacity-30 pointer-events-none" : ""
                 }`}
               >

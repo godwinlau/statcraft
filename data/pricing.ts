@@ -21,7 +21,7 @@ export const thesisPricing: PricingTier[] = [
       "1 revision round",
       "5\u20137 day delivery",
     ],
-    cta: "Get started \u2192",
+    cta: "Choose this plan",
   },
   {
     name: "Complete",
@@ -36,7 +36,7 @@ export const thesisPricing: PricingTier[] = [
       "3 revision rounds",
       "Support until defense",
     ],
-    cta: "Get started \u2192",
+    cta: "Choose this plan",
   },
   {
     name: "Premium",
@@ -50,7 +50,7 @@ export const thesisPricing: PricingTier[] = [
       "Unlimited revisions",
       "Priority 3-day turnaround",
     ],
-    cta: "Get started \u2192",
+    cta: "Choose this plan",
   },
 ];
 
@@ -65,7 +65,7 @@ export const pilotPricing: PricingTier[] = [
       "Item-total correlation",
       "Interpretation report",
     ],
-    cta: "Get started \u2192",
+    cta: "Choose this plan",
   },
   {
     name: "3\u20134 Scales",
@@ -78,7 +78,7 @@ export const pilotPricing: PricingTier[] = [
       "Exploratory factor analysis",
       "Construct validity check",
     ],
-    cta: "Get started \u2192",
+    cta: "Choose this plan",
   },
   {
     name: "5+ Scales",
@@ -90,7 +90,7 @@ export const pilotPricing: PricingTier[] = [
       "Confirmatory factor analysis",
       "Unlimited revisions",
     ],
-    cta: "Get started \u2192",
+    cta: "Choose this plan",
   },
 ];
 
@@ -105,7 +105,7 @@ export const tutorPricing: PricingTier[] = [
       "1-on-1 via Google Meet",
       "Custom lesson plan",
     ],
-    cta: "Book a session \u2192",
+    cta: "Book a session",
   },
   {
     name: "Monthly",
@@ -118,7 +118,7 @@ export const tutorPricing: PricingTier[] = [
       "Progress tracking",
       "Messenger support",
     ],
-    cta: "Get started \u2192",
+    cta: "Choose this plan",
   },
   {
     name: "Defense Coach",
@@ -130,6 +130,6 @@ export const tutorPricing: PricingTier[] = [
       "Anticipate panel questions",
       "Methodology deep-dive",
     ],
-    cta: "Book coaching \u2192",
+    cta: "Book coaching",
   },
 ];

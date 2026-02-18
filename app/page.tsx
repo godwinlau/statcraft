@@ -2,8 +2,6 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import StickyCTA from "@/components/layout/StickyCTA";
 import Hero from "@/components/sections/Hero";
-import ProofBar from "@/components/sections/ProofBar";
-import Credentials from "@/components/sections/Credentials";
 import Problem from "@/components/sections/Problem";
 import CaseStudy from "@/components/sections/CaseStudy";
 import Team from "@/components/sections/Team";
@@ -15,27 +13,30 @@ import Tools from "@/components/sections/Tools";
 import Testimonials from "@/components/sections/Testimonials";
 import FAQ from "@/components/sections/FAQ";
 import Contact from "@/components/sections/Contact";
+import FontDebugPanel from "@/components/debug/FontDebugPanel";
 
 export default function Home() {
   return (
     <>
       <Navbar />
       <Hero />
-      <ProofBar />
-      <Credentials />
-      <Problem />
-      <CaseStudy />
-      <Team />
-      <WhatYouGet />
-      <Services />
-      <Pricing />
-      <Compare />
-      <Tools />
-      <Testimonials />
-      <FAQ />
-      <Contact />
-      <Footer />
+      {/* Solid wrapper — scrolls over the fixed hero video */}
+      <div className="relative z-20 bg-d05">
+        <Problem />
+        <CaseStudy />
+        <Team />
+        <WhatYouGet />
+        <Services />
+        <Pricing />
+        <Compare />
+        <Tools />
+        <Testimonials />
+        <FAQ />
+        <Contact />
+        <Footer />
+      </div>
       <StickyCTA />
+      <FontDebugPanel />
     </>
   );
 }

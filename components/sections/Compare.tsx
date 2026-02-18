@@ -11,7 +11,7 @@ function CellContent({ value, isStatcraft }: { value: string; isStatcraft: boole
 
 export default function Compare() {
   return (
-    <section className="py-30 bg-cr bg-crosshatch">
+    <section className="py-30 max-md:py-16 bg-d05 bg-d05osshatch">
       <div className="container">
         <RevealOnScroll>
           <div className="text-center mb-12">
@@ -22,7 +22,7 @@ export default function Compare() {
         </RevealOnScroll>
 
         <RevealOnScroll>
-          <div className="max-w-[880px] mx-auto rounded-card overflow-hidden border border-d10 shadow-subtle">
+          <div className="max-w-[880px] mx-auto rounded-card overflow-hidden shadow-subtle">
             {/* Header */}
             <div className="grid grid-cols-[160px_repeat(4,1fr)] max-md:grid-cols-[100px_repeat(4,1fr)] bg-d text-white">
               <div className="p-[13px_12px] text-[12px] font-bold flex items-center" />

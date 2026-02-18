@@ -18,14 +18,14 @@ const sideStats = [
 
 export default function CaseStudy() {
   return (
-    <section className="py-30 bg-d bg-dark-dots text-white relative overflow-hidden">
+    <section className="py-30 max-md:py-16 bg-d bg-dark-dots text-white relative overflow-hidden">
       <div className="absolute -top-[200px] -right-[100px] w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(232,83,14,0.1),transparent_70%)] pointer-events-none" />
       <div className="container">
         <RevealOnScroll>
           <div className="mb-12 relative z-[1]">
             <SectionLabel light>Real project</SectionLabel>
             <h2 className="text-[length:var(--h2)] leading-[1.12] mb-2.5 mt-2">
-              From panic to defense<br />in <em className="not-italic text-o">12 days.</em>
+              From panic to defense<br />in <em className="not-italic bg-gradient-to-b from-[#FF6A33] to-[#FF4400] bg-clip-text text-transparent">12 days.</em>
             </h2>
             <p className="text-base text-white/40 max-w-[420px]">An anonymized walkthrough of a real engagement.</p>
           </div>

@@ -5,7 +5,7 @@ import { team } from "@/data/team";
 
 export default function Team() {
   return (
-    <section id="team" className="py-30 bg-cr bg-team-dots overflow-hidden">
+    <section id="team" className="py-30 max-md:py-16 bg-d05 bg-team-dots overflow-hidden">
       <div className="container">
         <RevealOnScroll>
           <div className="mb-14 text-center">
@@ -19,7 +19,7 @@ export default function Team() {
           </div>
         </RevealOnScroll>
 
-        <div className="grid grid-cols-3 gap-x-6 gap-y-8 max-w-[980px] mx-auto max-lg:grid-cols-2 max-md:grid-cols-2">
+        <div className="grid grid-cols-3 gap-x-6 gap-y-8 max-w-[980px] mx-auto max-lg:grid-cols-2 max-md:grid-cols-1">
           {team.map((m, i) => (
             <RevealOnScroll key={m.initials} delay={i * 0.03}>
               <PolaroidCard member={m} index={i} />

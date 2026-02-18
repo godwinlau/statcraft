@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
-import { DM_Sans, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import SmoothScroll from "@/components/providers/SmoothScroll";
 import "./globals.css";
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+const uncutSans = localFont({
+  src: "../assets/fonts/UncutSans-Variable.woff2",
+  variable: "--font-uncut-sans",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -36,7 +31,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${dmSans.variable} ${jetbrainsMono.variable} antialiased`}>
+      <body className={`${uncutSans.variable} antialiased`}>
+        <SmoothScroll />
         {children}
       </body>
     </html>

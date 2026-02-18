@@ -7,7 +7,7 @@ const stats = [
 
 export default function ProofBar() {
   return (
-    <section className="bg-d text-white">
+    <section className="relative z-10 bg-d/80 backdrop-blur-sm text-white">
       <div className="container grid grid-cols-4 max-md:grid-cols-2">
         {stats.map((s, i) => (
           <div

@@ -2,9 +2,9 @@ import type { Deliverable } from "@/data/deliverables";
 
 export default function DeliverableCard({ item }: { item: Deliverable }) {
   return (
-    <div className="flex-none w-[340px] max-md:w-[280px] snap-start bg-white border border-d10 rounded-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card hover:border-o">
+    <div className="flex-none w-[340px] max-md:w-[280px] snap-start bg-white rounded-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card">
       {/* Top bar */}
-      <div className="px-2.5 py-2 bg-d05 border-b border-d10 flex items-center gap-1.5">
+      <div className="px-2.5 py-2 bg-d05 flex items-center gap-1.5">
         <div className="w-[7px] h-[7px] rounded-full bg-d20" />
         <div className="w-[7px] h-[7px] rounded-full bg-d20" />
         <div className="w-[7px] h-[7px] rounded-full bg-d20" />
